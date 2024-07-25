@@ -17,22 +17,18 @@ import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { ShowPasswordBlock } from './show-password-block';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
-
-const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' }),
-  password: z.string(),
-});
+import {
+  LoginUserFormValue,
+  LoginUserSchema,
+} from '@/schema/login-user-schema';
 
 const defaultValues = {
   email: '',
   password: '',
 };
-
-type UserFormValue = z.infer<typeof formSchema>;
 
 type Props = {
   callbackUrl: string;
@@ -48,12 +44,12 @@ export const LoginForm = ({
   const { toast } = useToast();
   const router = useRouter();
 
-  const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginUserFormValue>({
+    resolver: zodResolver(LoginUserSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: UserFormValue) => {
+  const onSubmit = async (data: LoginUserFormValue) => {
     const { update, id: toastId } = toast({
       title: 'Signing in...',
       description: 'Please wait while we verify the credentials.',
