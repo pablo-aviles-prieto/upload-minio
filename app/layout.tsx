@@ -2,14 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Providers from '@/components/layout/providers';
 import { getServerSession } from 'next-auth';
-import { Inter as FontSans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-import { cn } from '@/lib/utils';
-
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Upload data',
@@ -24,12 +19,9 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable
-        )}
+        className={`${inter.className} overflow-hidden min-h-screen antialiased`}
       >
         <Providers session={session}>{children}</Providers>
       </body>

@@ -17,18 +17,20 @@ export const AuthBlock = () => {
         isOpen={openForgotPasswordModal}
         onClose={() => setOpenForgotPasswordModal(false)}
       />
-      <div className='flex flex-col space-y-2 text-center'>
-        <h1 className='text-2xl font-semibold tracking-tight'>
-          Access to your account
-        </h1>
-        <p className='text-sm text-muted-foreground'>
-          Enter your credentials below to login
-        </p>
+      <div className='max-w-sm mx-auto'>
+        <div className='flex flex-col space-y-2 text-center'>
+          <h1 className='text-2xl font-semibold tracking-tight'>
+            Access to your account
+          </h1>
+          <p className='text-sm text-muted-foreground'>
+            Enter your credentials below to login
+          </p>
+        </div>
+        <LoginForm
+          callbackUrl={callbackUrl ?? DEFAULT_CALLBACK_URL}
+          setOpenForgotPasswordModal={setOpenForgotPasswordModal}
+        />
       </div>
-      <LoginForm
-        callbackUrl={callbackUrl ?? DEFAULT_CALLBACK_URL}
-        setOpenForgotPasswordModal={setOpenForgotPasswordModal}
-      />
     </>
   );
 };

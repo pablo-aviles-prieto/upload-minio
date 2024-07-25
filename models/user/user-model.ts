@@ -2,6 +2,7 @@ import { Schema, model, Document, Model } from 'mongoose';
 import { modelExists } from '@/utils/check-model-exists';
 import { UserRole, UserStatus } from '@/types/user';
 import { v4 as uuidv4 } from 'uuid';
+import { ThemeOptions } from '@/utils/const';
 
 export interface User extends Document {
   _id: string;
@@ -12,6 +13,7 @@ export interface User extends Document {
   role: UserRole;
   scopes: string[];
   status: UserStatus;
+  theme: ThemeOptions;
 }
 
 const UserSchema = new Schema<User>({
@@ -26,6 +28,11 @@ const UserSchema = new Schema<User>({
     type: String,
     enum: Object.values(UserStatus),
     default: UserStatus.ACTIVE,
+  },
+  theme: {
+    type: String,
+    enum: Object.values(ThemeOptions),
+    default: ThemeOptions.SYSTEM,
   },
 });
 

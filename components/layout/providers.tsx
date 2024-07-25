@@ -3,6 +3,8 @@
 import React from 'react';
 import { SessionProvider, SessionProviderProps } from 'next-auth/react';
 import { Toaster } from '../ui/toaster';
+import ThemeProvider from './theme/theme-provider';
+import { ThemeOptions } from '@/utils/const';
 
 export default function Providers({
   session,
@@ -12,9 +14,16 @@ export default function Providers({
   children: React.ReactNode;
 }) {
   return (
-    <SessionProvider session={session}>
-      <Toaster />
-      {children}
-    </SessionProvider>
+    <ThemeProvider
+      attribute='class'
+      defaultTheme={ThemeOptions.SYSTEM}
+      enableSystem
+      disableTransitionOnChange
+    >
+      <SessionProvider session={session}>
+        <Toaster />
+        {children}
+      </SessionProvider>
+    </ThemeProvider>
   );
 }
