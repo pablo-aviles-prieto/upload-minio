@@ -1,7 +1,11 @@
-export default function Home() {
-  return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div>Test v12</div>
-    </main>
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth-options';
+import { getServerSession, type NextAuthOptions } from 'next-auth';
+
+export default async function Home() {
+  const session = await getServerSession(
+    authOptions as unknown as NextAuthOptions
   );
+  console.log('session', session);
+  redirect(session?.user ? '/home' : '/auth');
 }
