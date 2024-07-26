@@ -1,0 +1,20 @@
+services:
+  upload-minio:
+    container_name: upload-minio
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    tty: true
+    image: upload-minio
+    env_file: .env.local
+    environment:
+      - NODE_ENV=development
+      #  This makes that the nextjs project has HMR in windows
+      - WATCHPACK_POLLING=true
+    volumes:
+      # Required to sync file changes.
+      - .:/usr/src/app
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
