@@ -4,8 +4,11 @@ import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb-config';
 import { User } from '@/models';
 import { JWT, encode } from 'next-auth/jwt';
-import { CustomSession } from '@/types';
+import { CustomSession, UserRole, UserStatus } from '@/types';
 import { compare } from 'bcrypt';
+import { ThemeOptions } from '@/utils/const';
+
+type EnhancedToken = CustomSession['user'] & JWT;
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -26,7 +29,16 @@ export const authOptions = {
           user.password
         );
         if (!passwordMatches) return null;
-        // TODO: Update the lastLogin prop in the user that just logged in
+
+        // Update the lastLoginDate property
+        await client
+          .db()
+          .collection<User>('users')
+          .updateOne(
+            { _id: user._id },
+            { $set: { lastLoginDate: new Date().toISOString() } }
+          );
+
         const returnedUser = {
           ...user,
           id: user._id,
@@ -65,12 +77,21 @@ export const authOptions = {
       // When signing in, `user` will contain the user data returned by the `authorize` function.
       if (user) {
         token.id = user.id;
-        token.name = user.name;
         token.email = user.email;
+        token.role = user.role;
+        token.scopes = user.scopes;
+        token.theme = user.theme;
+        token.status = user.status;
       }
       return token;
     },
-    async session({ session, token }: { session: DefaultSession; token: JWT }) {
+    async session({
+      session,
+      token,
+    }: {
+      session: DefaultSession;
+      token: EnhancedToken;
+    }) {
       // This callback is called whenever the session data is accessed.
       // You can include additional user information from the `token` object.
       if (session.user) {
@@ -82,10 +103,12 @@ export const authOptions = {
           ...session,
           accessToken: jwtString,
           user: {
-            ...session.user,
-            id: token.id as string,
-            name: token.name,
+            id: token.id,
             email: token.email,
+            role: token.role,
+            scopes: token.scopes,
+            status: token.status,
+            theme: token.theme,
           },
         };
         return customSession;
