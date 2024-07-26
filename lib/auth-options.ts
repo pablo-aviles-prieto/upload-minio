@@ -26,6 +26,7 @@ export const authOptions = {
           user.password
         );
         if (!passwordMatches) return null;
+        // TODO: Update the lastLogin prop in the user that just logged in
         const returnedUser = {
           ...user,
           id: user._id,

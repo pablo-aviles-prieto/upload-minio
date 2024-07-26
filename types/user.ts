@@ -1,11 +1,11 @@
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-  TRIAL = 'trial',
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  TRIAL = 'TRIAL',
 }
 
 export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  SUSPENDED = 'suspended',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  SUSPENDED = 'SUSPENDED',
 }

@@ -3,6 +3,9 @@ export const errorMessages = {
   createUser: 'Error creating the user',
   credentials: 'Check the credentials provided',
   generic: 'Something went wrong. Try again later',
+  incorrectData: 'There was an error with the data provided. Try again later',
+  registerUser:
+    'There was an error registering to the database. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
@@ -13,9 +16,3 @@ export enum ThemeOptions {
   LIGHT = 'light',
   DARK = 'dark',
 }
-
-export const themeOptions = [
-  { key: 'light', name: 'Light' },
-  { key: 'dark', name: 'Dark' },
-  { key: 'system', name: 'System' },
-] as const;

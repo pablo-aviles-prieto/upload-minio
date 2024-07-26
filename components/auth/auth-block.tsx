@@ -5,6 +5,7 @@ import { LoginForm } from '../form/login-form';
 import { DEFAULT_CALLBACK_URL } from '@/utils/const';
 import { ForgotPasswordModal } from '../modal/forgot-password-modal';
 import { useState } from 'react';
+import ThemeToggle from '../layout/theme/theme-toggle';
 
 export const AuthBlock = () => {
   const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false);
@@ -13,6 +14,7 @@ export const AuthBlock = () => {
 
   return (
     <>
+      <ThemeToggle />
       <ForgotPasswordModal
         isOpen={openForgotPasswordModal}
         onClose={() => setOpenForgotPasswordModal(false)}

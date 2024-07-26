@@ -1,7 +1,6 @@
 'use client';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,7 +14,8 @@ import type { CustomSession } from '@/types';
 import { useEffect } from 'react';
 import { useFetch } from '@/hooks/use-fetch';
 import { useToast } from '@/components/ui/use-toast';
-import { themeOptions } from '@/utils/const';
+import { ThemeOptions } from '@/utils/const';
+import { getValuesFromEnum } from '@/utils/get-values-from-enum';
 
 export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
@@ -23,6 +23,8 @@ export default function ThemeToggle() {
   const session = data as CustomSession;
   const { fetchPetition } = useFetch();
   const { toast } = useToast();
+
+  const themeOptions = getValuesFromEnum(ThemeOptions);
 
   useEffect(() => {
     if (session?.user?.theme) {
@@ -62,7 +64,7 @@ export default function ThemeToggle() {
             key={themeOpt.key}
             onClick={() => changeTheme(themeOpt.key)}
           >
-            {themeOpt.name}{' '}
+            {themeOpt.key}{' '}
             {theme === themeOpt.key && (
               <Check className='w-[22px] h-[22px] pl-2' />
             )}
