@@ -4,9 +4,8 @@ import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb-config';
 import { User } from '@/models';
 import { JWT, encode } from 'next-auth/jwt';
-import { CustomSession, UserRole, UserStatus } from '@/types';
+import { CustomSession } from '@/types';
 import { compare } from 'bcrypt';
-import { ThemeOptions } from '@/utils/const';
 
 type EnhancedToken = CustomSession['user'] & JWT;
 

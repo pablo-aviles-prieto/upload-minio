@@ -6,6 +6,6 @@ export default async function Home() {
   const session = await getServerSession(
     authOptions as unknown as NextAuthOptions
   );
-  console.log('session HOME', session);
+
   redirect(session?.user ? '/home' : '/auth');
 }
