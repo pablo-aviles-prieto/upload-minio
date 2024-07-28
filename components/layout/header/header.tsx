@@ -1,12 +1,15 @@
+import { authOptions } from '@/lib/auth-options';
+import { CustomSession, UserRole } from '@/types';
+import { HEADER_OPTIONS } from '@/utils/const';
+import { getServerSession, NextAuthOptions } from 'next-auth';
 import Link from 'next/link';
 
-const HEADER_OPTIONS = [
-  { key: 'home', label: 'Home', icon: '', href: '/home' },
-  { key: 'upload', label: 'Upload', icon: '', href: '/home/upload' },
-  { key: 'profile', label: 'Profile', icon: '', href: '/home/profile' },
-];
+export const Header = async () => {
+  const session = await getServerSession(
+    authOptions as unknown as NextAuthOptions
+  );
+  console.log('session header', session);
 
-export const Header = () => {
   return (
     <nav
       className='flex items-center justify-between px-8 min-h-16'
@@ -14,7 +17,13 @@ export const Header = () => {
     >
       <Link href='/home'>Uploader</Link>
       <div className='flex items-center gap-x-4'>
-        {HEADER_OPTIONS.map((opt) => (
+        {HEADER_OPTIONS.filter((opt) => {
+          const typedSession = session as CustomSession;
+          return (
+            !opt.roleAccess ||
+            opt.roleAccess.includes(typedSession?.user?.role ?? UserRole.USER)
+          );
+        }).map((opt) => (
           <Link key={opt.key} href={opt.href}>
             {opt.label}
           </Link>

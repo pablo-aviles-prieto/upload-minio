@@ -1,3 +1,5 @@
+import { UserRole } from '@/types';
+
 export const errorMessages = {
   authorizedResource: 'Not Authorized for this resource',
   createUser: 'Error creating the user',
@@ -16,3 +18,16 @@ export enum ThemeOptions {
   LIGHT = 'light',
   DARK = 'dark',
 }
+
+export const HEADER_OPTIONS = [
+  { key: 'home', label: 'Home', icon: '', href: '/home' },
+  { key: 'upload', label: 'Upload', icon: '', href: '/home/upload' },
+  {
+    key: 'invite',
+    label: 'Invite',
+    icon: '',
+    href: '/home/invite',
+    roleAccess: [UserRole.ADMIN],
+  },
+  { key: 'profile', label: 'Profile', icon: '', href: '/home/profile' },
+];
