@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Setup and Management with Docker
 
-## Getting Started
+## Initial Setup
 
-First, run the development server:
+### 1. Start Docker Compose Service
+
+If you don't have the dependencies installed, start the Docker Compose service:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Once the service is running, install the dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+docker compose run --rm SERVICE_NAME npm install
+```
 
-## Learn More
+This command will:
 
-To learn more about Next.js, take a look at the following resources:
+- Install the dependencies.
+- Clone them from the container to the project.
+- Delete the container created to just install the dependencies.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Build the Service
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Build the service and run it in detached mode:
 
-## Deploy on Vercel
+```bash
+docker compose up -d --build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Run the Service
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Run the service:
+
+```bash
+docker compose up -d
+```
+
+_-d will run the service in detached mode_
+
+## Installing New Dependencies
+
+To install any new dependency, you can use:
+
+```bash
+docker compose exec SERVICE_NAME COMMAND_TO_EXECUTE
+```
+
+Or use the script file in the repository:
+
+```bash
+scripts\docker-exec.bat COMMAND_TO_EXECUTE
+```
