@@ -31,3 +31,5 @@ export const HEADER_OPTIONS = [
   },
   { key: 'profile', label: 'Profile', icon: '', href: '/home/profile' },
 ];
+
+export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';

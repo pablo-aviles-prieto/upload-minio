@@ -8,7 +8,6 @@ export const Header = async () => {
   const session = await getServerSession(
     authOptions as unknown as NextAuthOptions
   );
-  console.log('session header', session);
 
   return (
     <nav
