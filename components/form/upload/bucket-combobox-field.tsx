@@ -26,18 +26,42 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { BucketItemFromList } from 'minio';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface ComboboxFieldProps {
   bucketOptions: BucketItemFromList[] | undefined;
   form: UseFormReturn<any, any, undefined>;
 }
 
-const WIDTH = 'w-[36rem]';
+const WIDTH = 'w-full';
 
 export const BucketComboboxField = ({
   bucketOptions,
   form,
 }: ComboboxFieldProps) => {
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [popoverWidth, setPopoverWidth] = useState<string>('auto');
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const updatePopoverWidth = useCallback(() => {
+    if (triggerRef.current) {
+      setPopoverWidth(`${triggerRef.current.offsetWidth}px`);
+    }
+  }, [triggerRef.current]);
+
+  useEffect(() => {
+    updatePopoverWidth();
+    window.addEventListener('resize', updatePopoverWidth);
+    return () => {
+      window.removeEventListener('resize', updatePopoverWidth);
+    };
+  }, [updatePopoverWidth]);
+
+  const handleSelect = (bucketName: string) => {
+    form.setValue('bucket', bucketName);
+    setPopoverOpen(false);
+  };
+
   return (
     <FormField
       control={form.control}
@@ -45,7 +69,7 @@ export const BucketComboboxField = ({
       render={({ field }) => (
         <FormItem className='flex flex-col'>
           <FormLabel>Bucket</FormLabel>
-          <Popover>
+          <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
@@ -55,6 +79,7 @@ export const BucketComboboxField = ({
                     `${WIDTH} justify-between`,
                     !field.value && 'text-muted-foreground'
                   )}
+                  ref={triggerRef}
                 >
                   {field.value
                     ? bucketOptions?.find(
@@ -65,22 +90,17 @@ export const BucketComboboxField = ({
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className={`${WIDTH} p-0`}>
+            <PopoverContent style={{ width: popoverWidth }} className='p-0'>
               <Command>
-                <CommandInput
-                  placeholder='Search framework...'
-                  className='h-9'
-                />
+                <CommandInput placeholder='Search bucket...' className='h-9' />
                 <CommandList>
-                  <CommandEmpty>No framework found.</CommandEmpty>
+                  <CommandEmpty>No bucket found.</CommandEmpty>
                   <CommandGroup>
                     {bucketOptions?.map((bucket) => (
                       <CommandItem
                         value={bucket.name}
                         key={bucket.name}
-                        onSelect={() => {
-                          form.setValue('bucket', bucket.name);
-                        }}
+                        onSelect={() => handleSelect(bucket.name)}
                       >
                         {bucket.name}
                         <CheckIcon
