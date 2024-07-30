@@ -33,3 +33,5 @@ export const HEADER_OPTIONS = [
 ];
 
 export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';
+
+export const URL_PROCESS_FILE = `/api/upload/process-file`;

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import './globals.css';
 import Providers from '@/components/layout/providers';
 import { getServerSession } from 'next-auth';
 import { Inter } from 'next/font/google';
+import 'filepond/dist/filepond.min.css';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

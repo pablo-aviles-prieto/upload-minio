@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-light: 24.6 95% 53.1%;
+  --primary-dark: 20.5 90.2% 48.2%;
+}
+
 * {
   scrollbar-width: thin;
 }
@@ -26,7 +31,7 @@
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24.6 95% 53.1%;
+    --primary: var(--primary-light);
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
@@ -56,7 +61,7 @@
     --card-foreground: 60 9.1% 97.8%;
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 60 9.1% 97.8%;
-    --primary: 20.5 90.2% 48.2%;
+    --primary: var(--primary-dark);
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 60 9.1% 97.8%;
@@ -86,4 +91,40 @@
   body {
     @apply box-border bg-background text-foreground;
   }
+}
+
+.filepond--credits {
+  display: none;
+}
+
+.file-wrapper {
+  opacity: 0;
+  transition: opacity 1s 0.25s;
+}
+
+.file-wrapper .filepond--panel-root {
+  background-color: transparent;
+  border: 2px solid hsl(var(--primary-light));
+}
+
+.file-wrapper:hover .filepond--panel-root {
+  border-color: hsl(var(--primary-dark));
+}
+
+.file-wrapper .filepond--drop-label {
+  color: #7e7e7e;
+}
+
+.file-wrapper .filepond--file {
+  background-color: hsl(var(--primary-light));
+}
+
+/* Override background color when processing is complete */
+.file-wrapper [data-filepond-item-state='processing-complete'] .filepond--file {
+  background-color: rgb(54, 151, 99);
+}
+
+/* Override background color when there is an error */
+.file-wrapper [data-filepond-item-state='processing-error'] .filepond--file {
+  background-color: rgb(196, 78, 71);
 }

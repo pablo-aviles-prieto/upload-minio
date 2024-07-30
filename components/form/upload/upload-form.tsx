@@ -18,6 +18,8 @@ import { BucketItemFromList } from 'minio';
 import { toast } from '@/components/ui/use-toast';
 import { BucketComboboxField } from './bucket-combobox-field';
 import { Input } from '@/components/ui/input';
+import { InputFileBlock } from './input-file-block';
+import { type FilePondInitialFile } from 'filepond';
 
 const defaultValues = {
   bucket: '',
@@ -31,7 +33,9 @@ type Props = {
 
 export const UploadForm = ({ bucketOptions }: Props) => {
   const [loading, setLoading] = useState(false);
-
+  const [files, setFiles] = useState<Array<FilePondInitialFile | File | Blob>>(
+    []
+  );
   const form = useForm<UploadFormValue>({
     resolver: zodResolver(UploadFormSchema),
     defaultValues,
@@ -70,6 +74,7 @@ export const UploadForm = ({ bucketOptions }: Props) => {
             </FormItem>
           )}
         />
+        <InputFileBlock files={files} setFiles={setFiles} />
         <Button disabled={loading} className='w-full !mt-6' type='submit'>
           Upload
         </Button>

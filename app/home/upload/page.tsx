@@ -12,7 +12,6 @@ async function listAllBuckets() {
 
 export default async function Upload() {
   const buckets = await listAllBuckets();
-  console.log('buckets', buckets);
 
   return (
     <div className='flex flex-col items-center justify-center min-h-[calc(100vh-64px)] max-w-xl mx-auto'>
