@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { FilePond } from 'react-filepond';
 import type { FilePondFile, FilePondInitialFile } from 'filepond';
 import { URL_PROCESS_FILE } from '@/utils/const';
@@ -11,12 +11,18 @@ type InputFileBlock = {
   setFiles: React.Dispatch<
     React.SetStateAction<(FilePondInitialFile | File | Blob)[]>
   >;
+  inputFileRef: RefObject<FilePond>;
+  fileEndpoint?: string;
 };
 
-export const InputFileBlock = ({ files, setFiles }: InputFileBlock) => {
+export const InputFileBlock = ({
+  files,
+  setFiles,
+  inputFileRef,
+  fileEndpoint = undefined,
+}: InputFileBlock) => {
   const [isReady, setIsReady] = useState(false);
   const { toast } = useToast();
-  const pondRef = useRef<FilePond>(null);
 
   useEffect(() => {
     setIsReady(true);
@@ -31,6 +37,8 @@ export const InputFileBlock = ({ files, setFiles }: InputFileBlock) => {
   const handleFileProcessed = (response: any) => {
     const parsedRes = JSON.parse(response);
     console.log('parsedRes', parsedRes);
+    // TODO: Return the file name in this function even if its not used in the remove
+    // TODO: Set the data of the uplaoded files in a setter
     return 'success';
   };
 
@@ -51,27 +59,21 @@ export const InputFileBlock = ({ files, setFiles }: InputFileBlock) => {
       });
   };
 
-  const handleUploadFiles = () => {
-    if (pondRef.current) {
-      pondRef.current.processFiles();
-    }
-  };
-
   return (
     <>
       <div
-        className='file-wrapper max-w-[400px] mx-auto pt-4'
+        className='file-wrapper mx-auto'
         style={isReady ? { opacity: 1 } : undefined}
       >
         <FilePond
-          ref={pondRef}
+          ref={inputFileRef}
           files={files}
           allowMultiple
           maxFiles={3}
           maxParallelUploads={3}
           onupdatefiles={handleUpdateFiles}
           credits={false}
-          labelIdle='Drag & Drop your files or <span class="filepond--label-action"> Browse </span>'
+          labelIdle='Drag & Drop your files or <span class="filepond--label-action" tabindex="0" role="button"> Browse </span>'
           labelFileProcessing='Uploading'
           labelFileProcessingComplete='Upload completed'
           labelTapToCancel='Please wait...'
@@ -80,7 +82,7 @@ export const InputFileBlock = ({ files, setFiles }: InputFileBlock) => {
           instantUpload={false}
           server={{
             process: {
-              url: URL_PROCESS_FILE,
+              url: fileEndpoint ?? URL_PROCESS_FILE,
               method: 'POST',
               withCredentials: false,
               onload: handleFileProcessed,
@@ -109,9 +111,6 @@ export const InputFileBlock = ({ files, setFiles }: InputFileBlock) => {
           }}
         />
       </div>
-      <button type='button' onClick={handleUploadFiles}>
-        Upload Files
-      </button>
     </>
   );
 };

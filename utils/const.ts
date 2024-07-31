@@ -8,6 +8,7 @@ export const errorMessages = {
   incorrectData: 'There was an error with the data provided. Try again later',
   registerUser:
     'There was an error registering to the database. Try again later',
+  bucketNotSpecified: 'Bucket not specified',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
