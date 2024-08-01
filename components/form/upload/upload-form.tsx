@@ -14,28 +14,32 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { UploadFormSchema, UploadFormValue } from '@/schema/upload-form-schema';
 import { BucketItemFromList } from 'minio';
-import { toast } from '@/components/ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { BucketComboboxField } from './bucket-combobox-field';
 import { InputFileBlock } from './input-file-block';
 import { type FilePondInitialFile } from 'filepond';
 import { FilePond } from 'react-filepond';
 import { URL_PROCESS_FILE } from '@/utils/const';
+import type { UploadedFiles } from '@/types';
+import Link from 'next/link';
 
 const defaultValues = {
   bucket: '',
   files: [],
 };
 
-type Props = {
+interface UploadFormProps {
   bucketOptions: BucketItemFromList[] | undefined;
-};
+}
 
-export const UploadForm = ({ bucketOptions }: Props) => {
+export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
   const [loading, setLoading] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([]);
   const [files, setFiles] = useState<Array<FilePondInitialFile | File | Blob>>(
     []
   );
   const inputFileRef = useRef<FilePond>(null);
+  const { toast } = useToast();
 
   const form = useForm<UploadFormValue>({
     resolver: zodResolver(UploadFormSchema),
@@ -48,31 +52,44 @@ export const UploadForm = ({ bucketOptions }: Props) => {
     [selectedBucket]
   );
 
-  // TODO: Pass a setter to know the name and url of uploaded files and show them in the UI
-  // TODO: Reset the bucket and files values of the form/setter
-  const onSubmit = useCallback(
+  const uploadNewFilesHandler = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      setFiles([]);
+      setUploadedFiles([]);
+      form.reset(defaultValues, {
+        keepTouched: false,
+        keepDirty: false,
+        keepErrors: false,
+        keepValues: false,
+        keepIsSubmitted: false,
+        keepIsValid: false,
+        keepSubmitCount: false,
+      });
+    },
+    [setFiles, setUploadedFiles, form]
+  );
+
+  const submitHandler = useCallback(
     async (data: UploadFormValue) => {
       setLoading(true);
       if (inputFileRef.current) {
         await inputFileRef.current.processFiles();
       }
       toast({
-        title: 'You submitted the following values:',
-        description: (
-          <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-            <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
+        title: 'Files successfully uploaded',
+        description: `You can see the details of the ${data.files.length} file(s) uploaded`,
+        variant: 'success',
       });
       setLoading(false);
     },
-    [inputFileRef, setLoading]
+    [inputFileRef, setLoading, toast]
   );
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(submitHandler)}
         className='w-full space-y-10 px-2'
       >
         <BucketComboboxField bucketOptions={bucketOptions} form={form} />
@@ -93,6 +110,7 @@ export const UploadForm = ({ bucketOptions }: Props) => {
                   }}
                   inputFileRef={inputFileRef}
                   fileEndpoint={processFileUrl}
+                  setUploadedFiles={setUploadedFiles}
                 />
               </FormControl>
               <FormDescription>Upload your files</FormDescription>
@@ -102,10 +120,34 @@ export const UploadForm = ({ bucketOptions }: Props) => {
             </FormItem>
           )}
         />
-        <Button disabled={loading} className='w-full !mt-6' type='submit'>
-          Upload
-        </Button>
+        {uploadedFiles.length > 0 ? (
+          <Button
+            disabled={loading}
+            className='w-full !mt-6'
+            type='button'
+            onClick={uploadNewFilesHandler}
+          >
+            Upload new files
+          </Button>
+        ) : (
+          <Button disabled={loading} className='w-full !mt-6' type='submit'>
+            Upload
+          </Button>
+        )}
       </form>
+      {uploadedFiles.length > 0 && (
+        <div className='mt-8'>
+          <p>Uploaded files:</p>
+          {uploadedFiles.map((file) => (
+            <div key={file.name}>
+              <p>Name: {file.name}</p>
+              <Link href={file.url} rel='noopener noreferrer' target='_blank'>
+                Link to file
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </Form>
   );
 };

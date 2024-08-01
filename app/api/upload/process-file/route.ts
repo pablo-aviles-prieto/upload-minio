@@ -2,6 +2,7 @@ import { errorMessages } from '@/utils/const';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { retrieveMinioClient } from '@/lib/minio-client';
+import type { ProcessedFiles } from '@/types';
 
 export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
@@ -53,7 +54,9 @@ export const POST = async (req: NextRequest) => {
       })
     );
 
-    return NextResponse.json({ ok: true, uploadedFiles }, { status: 200 });
+    const response: ProcessedFiles = { ok: true, uploadedFiles };
+
+    return NextResponse.json(response, { status: 201 });
   } catch (error) {
     console.error('Error uploading files to Minio:', error);
     return NextResponse.json(
@@ -61,12 +64,6 @@ export const POST = async (req: NextRequest) => {
       { status: 500 }
     );
   }
-
-  // console.log('validFiles', validFiles);
-  // console.log('selectedBucket', selectedBucket);
-
-  // // TODO: Upload the file to the selected bucket in minio, and return a generated uuid???
-  // return NextResponse.json({ ok: true, files: validFiles }, { status: 200 });
 };
 
 export const DELETE = async (req: NextRequest) => {

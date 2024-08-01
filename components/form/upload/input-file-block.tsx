@@ -5,20 +5,24 @@ import { FilePond } from 'react-filepond';
 import type { FilePondFile, FilePondInitialFile } from 'filepond';
 import { URL_PROCESS_FILE } from '@/utils/const';
 import { useToast } from '../../ui/use-toast';
+import type { ProcessedFiles, UploadedFiles } from '@/types';
 
-type InputFileBlock = {
+interface InputFileBlock {
   files: (FilePondInitialFile | Blob | File)[];
   setFiles: React.Dispatch<
     React.SetStateAction<(FilePondInitialFile | File | Blob)[]>
   >;
+  setUploadedFiles: React.Dispatch<React.SetStateAction<UploadedFiles[]>>;
   inputFileRef: RefObject<FilePond>;
   fileEndpoint?: string;
-};
+}
 
+// TODO: Use the plugin to preview images
 export const InputFileBlock = ({
   files,
-  setFiles,
   inputFileRef,
+  setFiles,
+  setUploadedFiles,
   fileEndpoint = undefined,
 }: InputFileBlock) => {
   const [isReady, setIsReady] = useState(false);
@@ -34,12 +38,10 @@ export const InputFileBlock = ({
     setFiles(updatedFiles);
   };
 
-  const handleFileProcessed = (response: any) => {
-    const parsedRes = JSON.parse(response);
-    console.log('parsedRes', parsedRes);
-    // TODO: Return the file name in this function even if its not used in the remove
-    // TODO: Set the data of the uplaoded files in a setter
-    return 'success';
+  const handleFileProcessed = (response: string) => {
+    const parsedRes = JSON.parse(response) as ProcessedFiles;
+    setUploadedFiles((prevState) => [...prevState, ...parsedRes.uploadedFiles]);
+    return parsedRes.uploadedFiles[0].name;
   };
 
   const handleFileRemoved = (uniqueFileId: string) => {
@@ -78,8 +80,9 @@ export const InputFileBlock = ({
           labelFileProcessingComplete='Upload completed'
           labelTapToCancel='Please wait...'
           name='files'
-          allowProcess={false} // Disable individual upload buttons
           instantUpload={false}
+          allowProcess={false} // Disable individual upload buttons
+          allowRevert={false} // Hides the undo button after upload a file
           server={{
             process: {
               url: fileEndpoint ?? URL_PROCESS_FILE,
