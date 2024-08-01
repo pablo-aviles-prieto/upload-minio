@@ -2,7 +2,7 @@ import { errorMessages } from '@/utils/const';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { retrieveMinioClient } from '@/lib/minio-client';
-import type { ProcessedFiles } from '@/types';
+import type { ProcessedFiles, UploadedFiles } from '@/types';
 
 export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const minioClient = retrieveMinioClient();
 
-    const uploadedFiles = await Promise.all(
+    const uploadedFiles: UploadedFiles[] = await Promise.all(
       validFiles.map(async (file) => {
         const fileBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(fileBuffer);
@@ -50,6 +50,7 @@ export const POST = async (req: NextRequest) => {
         return {
           name: file.name,
           url: presignedUrl,
+          size: file.size,
         };
       })
     );

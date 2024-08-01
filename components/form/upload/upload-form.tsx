@@ -22,6 +22,8 @@ import { FilePond } from 'react-filepond';
 import { URL_PROCESS_FILE } from '@/utils/const';
 import type { UploadedFiles } from '@/types';
 import Link from 'next/link';
+import { Icons } from '@/components/icons';
+import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
 
 const defaultValues = {
   bucket: '',
@@ -88,67 +90,72 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
   );
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(submitHandler)}
-        className='w-full space-y-6 px-2'
-      >
-        <BucketComboboxField bucketOptions={bucketOptions} form={form} />
-        <Controller
-          name='files'
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={fieldState.error ? 'text-destructive' : ''}>
-                Files
-              </FormLabel>
-              <FormControl>
-                <InputFileBlock
-                  files={files}
-                  setFiles={(newFiles) => {
-                    setFiles(newFiles);
-                    field.onChange(newFiles);
-                  }}
-                  inputFileRef={inputFileRef}
-                  fileEndpoint={processFileUrl}
-                  setUploadedFiles={setUploadedFiles}
-                />
-              </FormControl>
-              <FormDescription>Upload your files</FormDescription>
-              {fieldState.error && (
-                <FormMessage>{fieldState.error.message}</FormMessage>
-              )}
-            </FormItem>
-          )}
-        />
-        {uploadedFiles.length > 0 ? (
-          <Button
-            disabled={loading}
-            className='w-full !mt-6'
-            type='button'
-            onClick={uploadNewFilesHandler}
-          >
-            Upload new files
-          </Button>
-        ) : (
-          <Button disabled={loading} className='w-full !mt-6' type='submit'>
-            Upload
-          </Button>
-        )}
-      </form>
+    <>
       {uploadedFiles.length > 0 && (
-        <div className='mt-8'>
-          <p>Uploaded files:</p>
-          {uploadedFiles.map((file) => (
-            <div key={file.name}>
-              <p>Name: {file.name}</p>
-              <Link href={file.url} rel='noopener noreferrer' target='_blank'>
-                Link to file
-              </Link>
-            </div>
-          ))}
+        <div className='w-full'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+            {uploadedFiles.map((file) => (
+              <UploadedFilesCard
+                key={file.name}
+                fileName={file.name}
+                fileUrl={file.url}
+                fileSize={file.size}
+              />
+            ))}
+          </div>
         </div>
       )}
-    </Form>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(submitHandler)}
+          className='w-full space-y-6'
+        >
+          <BucketComboboxField bucketOptions={bucketOptions} form={form} />
+          <Controller
+            name='files'
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel
+                  className={fieldState.error ? 'text-destructive' : ''}
+                >
+                  Files
+                </FormLabel>
+                <FormControl>
+                  <InputFileBlock
+                    files={files}
+                    setFiles={(newFiles) => {
+                      setFiles(newFiles);
+                      field.onChange(newFiles);
+                    }}
+                    inputFileRef={inputFileRef}
+                    fileEndpoint={processFileUrl}
+                    setUploadedFiles={setUploadedFiles}
+                  />
+                </FormControl>
+                <FormDescription>Upload your files</FormDescription>
+                {fieldState.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
+              </FormItem>
+            )}
+          />
+          {uploadedFiles.length > 0 ? (
+            <Button
+              disabled={loading}
+              className='w-full !mt-6'
+              type='button'
+              onClick={uploadNewFilesHandler}
+            >
+              <Icons.fileUp className='mr-1 w-5 h-5' /> Upload new files
+            </Button>
+          ) : (
+            <Button disabled={loading} className='w-full !mt-6' type='submit'>
+              <Icons.cloudUpload className='mr-1 w-5 h-5' /> Upload
+            </Button>
+          )}
+        </form>
+      </Form>
+    </>
   );
 };

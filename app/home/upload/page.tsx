@@ -1,4 +1,5 @@
 import { UploadForm } from '@/components/form/upload/upload-form';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { retrieveMinioClient } from '@/lib/minio-client';
 
 async function listAllBuckets() {
@@ -14,11 +15,15 @@ export default async function Upload() {
   const buckets = await listAllBuckets();
 
   return (
-    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-64px)] max-w-xl mx-auto space-y-10'>
-      <h1 className='text-primary font-bold text-2xl opacity-85'>
+    <>
+      <h1 className='text-primary font-bold text-2xl text-center mb-4'>
         Upload up to 3 files
       </h1>
-      <UploadForm bucketOptions={buckets} />
-    </div>
+      <ScrollArea className='h-[calc(100vh-112px)] w-full'>
+        <div className='flex flex-col items-center justify-center max-w-xl mx-auto space-y-8 my-4 px-4 sm:px-2'>
+          <UploadForm bucketOptions={buckets} />
+        </div>
+      </ScrollArea>
+    </>
   );
 }
