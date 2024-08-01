@@ -128,3 +128,7 @@
 .file-wrapper [data-filepond-item-state='processing-error'] .filepond--file {
   background-color: rgb(196, 78, 71);
 }
+
+.filepond--root {
+  margin-bottom: 0;
+}

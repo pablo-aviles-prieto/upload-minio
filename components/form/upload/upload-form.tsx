@@ -57,6 +57,7 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
       e.stopPropagation();
       setFiles([]);
       setUploadedFiles([]);
+      // TODO: Instead of resetting, navigate to the file page passing the bucket to see the files?
       form.reset(defaultValues, {
         keepTouched: false,
         keepDirty: false,
@@ -90,7 +91,7 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(submitHandler)}
-        className='w-full space-y-10 px-2'
+        className='w-full space-y-6 px-2'
       >
         <BucketComboboxField bucketOptions={bucketOptions} form={form} />
         <Controller

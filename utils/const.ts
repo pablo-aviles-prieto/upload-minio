@@ -23,6 +23,7 @@ export enum ThemeOptions {
 export const HEADER_OPTIONS = [
   { key: 'home', label: 'Home', icon: '', href: '/home' },
   { key: 'upload', label: 'Upload', icon: '', href: '/home/upload' },
+  { key: 'files', label: 'Files', icon: '', href: '/home/files' },
   {
     key: 'invite',
     label: 'Invite',
