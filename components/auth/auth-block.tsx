@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { LoginForm } from '../form/login-form';
+import { LoginForm } from '../form/auth/login-form';
 import { DEFAULT_CALLBACK_URL } from '@/utils/const';
 import { ForgotPasswordModal } from '../modal/forgot-password-modal';
 import { useState } from 'react';
@@ -17,7 +17,7 @@ export const AuthBlock = () => {
         isOpen={openForgotPasswordModal}
         onClose={() => setOpenForgotPasswordModal(false)}
       />
-      <div className='max-w-sm mx-auto'>
+      <div className='flex flex-col items-center justify-center h-screen max-w-sm mx-auto'>
         <div className='flex flex-col space-y-2 text-center'>
           <h1 className='text-2xl font-semibold tracking-tight'>
             Access to your account

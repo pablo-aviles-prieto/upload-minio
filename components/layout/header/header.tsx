@@ -8,8 +8,8 @@ export const Header = async () => {
   const session = await getServerSession(
     authOptions as unknown as NextAuthOptions
   );
-  console.log('session header', session);
 
+  // TODO: Set as primary color the option with the current path
   return (
     <nav
       className='flex items-center justify-between px-8 min-h-16'

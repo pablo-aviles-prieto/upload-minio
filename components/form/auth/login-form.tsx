@@ -77,7 +77,7 @@ export const LoginForm = ({
           update({
             id: toastId,
             title: '✅ Signin Successful',
-            description: `Welcome back ${updatedSession.user.name}`,
+            description: `Welcome back ${updatedSession.user.email}`,
             variant: 'success',
           });
         }
