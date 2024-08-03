@@ -8,6 +8,7 @@ import { useToast } from '../../ui/use-toast';
 import type { ProcessedFiles, UploadedFiles } from '@/types';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 
 interface InputFileBlock {
   files: (FilePondInitialFile | Blob | File)[];
@@ -19,7 +20,11 @@ interface InputFileBlock {
   fileEndpoint?: string;
 }
 
-registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateSize);
+registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateSize,
+  FilePondPluginImageExifOrientation
+);
 
 export const InputFileBlock = ({
   files,
