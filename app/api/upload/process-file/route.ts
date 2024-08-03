@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { retrieveMinioClient } from '@/lib/minio-client';
 import type { ProcessedFiles, UploadedFiles } from '@/types';
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
 export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
   const files: File[] = formData.getAll('files') as File[];
@@ -25,6 +27,16 @@ export const POST = async (req: NextRequest) => {
       'name' in file &&
       'lastModified' in file
   );
+
+  if (validFiles.some((file) => file.size > MAX_FILE_SIZE)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: errorMessages.fileSizeExceeded,
+      },
+      { status: 413 }
+    );
+  }
 
   try {
     const minioClient = retrieveMinioClient();

@@ -125,7 +125,8 @@
 }
 
 /* Override background color when there is an error */
-.file-wrapper [data-filepond-item-state='processing-error'] .filepond--file {
+.file-wrapper [data-filepond-item-state='processing-error'] .filepond--file,
+.file-wrapper [data-filepond-item-state='load-invalid'] .filepond--file {
   background-color: rgb(196, 78, 71);
 }
 

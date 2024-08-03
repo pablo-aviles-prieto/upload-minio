@@ -9,6 +9,7 @@ export const Header = async () => {
     authOptions as unknown as NextAuthOptions
   );
 
+  // TODO: Set as primary color the option with the current path
   return (
     <nav
       className='flex items-center justify-between px-8 min-h-16'

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { LoginForm } from '../form/login-form';
+import { LoginForm } from '../form/auth/login-form';
 import { DEFAULT_CALLBACK_URL } from '@/utils/const';
 import { ForgotPasswordModal } from '../modal/forgot-password-modal';
 import { useState } from 'react';

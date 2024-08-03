@@ -9,6 +9,9 @@ export const errorMessages = {
   registerUser:
     'There was an error registering to the database. Try again later',
   bucketNotSpecified: 'Bucket not specified',
+  fileSizeExceeded: 'File size exceeds the maximum allowed limit (10MB)',
+  genericFileErrorTitle: 'There was an error uploading the file',
+  tryAgain: `Please, try again later`,
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
@@ -37,3 +40,5 @@ export const HEADER_OPTIONS = [
 export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';
 
 export const URL_PROCESS_FILE = `/api/upload/process-file`;
+
+export const FILE_MAX_SIZE = 10 * 1024 * 1024; // 10MB

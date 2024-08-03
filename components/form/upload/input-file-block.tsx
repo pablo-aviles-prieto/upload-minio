@@ -1,11 +1,13 @@
 'use client';
 
 import { RefObject, useEffect, useState } from 'react';
-import { FilePond } from 'react-filepond';
+import { FilePond, registerPlugin } from 'react-filepond';
 import type { FilePondFile, FilePondInitialFile } from 'filepond';
-import { URL_PROCESS_FILE } from '@/utils/const';
+import { errorMessages, URL_PROCESS_FILE } from '@/utils/const';
 import { useToast } from '../../ui/use-toast';
 import type { ProcessedFiles, UploadedFiles } from '@/types';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
 interface InputFileBlock {
   files: (FilePondInitialFile | Blob | File)[];
@@ -17,7 +19,8 @@ interface InputFileBlock {
   fileEndpoint?: string;
 }
 
-// TODO: Use the plugin to preview images
+registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateSize);
+
 export const InputFileBlock = ({
   files,
   inputFileRef,
@@ -80,6 +83,8 @@ export const InputFileBlock = ({
           labelFileProcessingComplete='Upload completed'
           labelTapToCancel='Please wait...'
           name='files'
+          imagePreviewMaxFileSize='2MB'
+          maxFileSize='10MB'
           instantUpload={false}
           allowProcess={false} // Disable individual upload buttons
           allowRevert={false} // Hides the undo button after upload a file
@@ -93,7 +98,7 @@ export const InputFileBlock = ({
                 try {
                   const parsedRes = JSON.parse(response);
                   toast({
-                    title: 'There was an error uploading the file',
+                    title: errorMessages.genericFileErrorTitle,
                     description: parsedRes.error,
                     variant: 'destructive',
                   });
@@ -101,8 +106,8 @@ export const InputFileBlock = ({
                   // Meaning that the response its not a stringified object
                   console.log('ERROR UPLOADING THE FILE:', response);
                   toast({
-                    title: 'There was an error uploading the file',
-                    description: `Please, try again later`,
+                    title: errorMessages.genericFileErrorTitle,
+                    description: errorMessages.tryAgain,
                     variant: 'destructive',
                   });
                 }

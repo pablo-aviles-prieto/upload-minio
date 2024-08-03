@@ -3,6 +3,7 @@ import Providers from '@/components/layout/providers';
 import { getServerSession } from 'next-auth';
 import { Inter } from 'next/font/google';
 import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

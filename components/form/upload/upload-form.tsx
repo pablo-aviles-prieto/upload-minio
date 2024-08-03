@@ -19,9 +19,8 @@ import { BucketComboboxField } from './bucket-combobox-field';
 import { InputFileBlock } from './input-file-block';
 import { type FilePondInitialFile } from 'filepond';
 import { FilePond } from 'react-filepond';
-import { URL_PROCESS_FILE } from '@/utils/const';
+import { errorMessages, FILE_MAX_SIZE, URL_PROCESS_FILE } from '@/utils/const';
 import type { UploadedFiles } from '@/types';
-import Link from 'next/link';
 import { Icons } from '@/components/icons';
 import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
 
@@ -48,6 +47,7 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
     defaultValues,
   });
 
+  const formFiles = form.watch('files'); // Watch for changes in files
   const selectedBucket = form.watch('bucket');
   const processFileUrl = useMemo(
     () => `${URL_PROCESS_FILE}?bucket=${encodeURIComponent(selectedBucket)}`,
@@ -76,9 +76,30 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
   const submitHandler = useCallback(
     async (data: UploadFormValue) => {
       setLoading(true);
+
+      console.log('formFiles', formFiles);
+      const oversizedFiles = formFiles.filter((file) => {
+        if (file instanceof File) {
+          return file.size > FILE_MAX_SIZE;
+        }
+        return false;
+      });
+      console.log('oversizedFiles', oversizedFiles);
+
+      if (oversizedFiles.length > 0) {
+        toast({
+          title: errorMessages.genericFileErrorTitle,
+          description: `One or more files exceed the size limit of 10MB.`,
+          variant: 'destructive',
+        });
+        setLoading(false);
+        return;
+      }
+
       if (inputFileRef.current) {
         await inputFileRef.current.processFiles();
       }
+
       toast({
         title: 'Files successfully uploaded',
         description: `You can see the details of the ${data.files.length} file(s) uploaded`,
@@ -86,7 +107,7 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
       });
       setLoading(false);
     },
-    [inputFileRef, setLoading, toast]
+    [inputFileRef, setLoading, toast, formFiles]
   );
 
   return (
