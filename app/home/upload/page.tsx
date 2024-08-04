@@ -1,15 +1,6 @@
 import { UploadForm } from '@/components/form/upload/upload-form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { retrieveMinioClient } from '@/lib/minio-client';
-
-async function listAllBuckets() {
-  try {
-    const buckets = await retrieveMinioClient().listBuckets();
-    return buckets;
-  } catch (err) {
-    console.error('Error listing buckets:', err);
-  }
-}
+import { listAllBuckets } from '@/services/minio/list-all-buckets';
 
 export default async function Upload() {
   const buckets = await listAllBuckets();

@@ -77,14 +77,12 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
     async (data: UploadFormValue) => {
       setLoading(true);
 
-      console.log('formFiles', formFiles);
       const oversizedFiles = formFiles.filter((file) => {
         if (file instanceof File) {
           return file.size > FILE_MAX_SIZE;
         }
         return false;
       });
-      console.log('oversizedFiles', oversizedFiles);
 
       if (oversizedFiles.length > 0) {
         toast({
