@@ -28,6 +28,8 @@ import {
 } from '@/components/ui/select';
 import { capitalizeFirstLetter } from '@/utils/capitalize-first-letter';
 import { Input } from '@/components/ui/input';
+import { useFetch } from '@/hooks/use-fetch';
+import { ACCESS_TO_ALL_SCOPES, URL_INVITE_USER } from '@/utils/const';
 
 const defaultValues = {
   buckets: [],
@@ -39,9 +41,16 @@ interface UploadFormProps {
   bucketOptions: BucketItemFromList[] | undefined;
 }
 
+interface ResponseRegisterMail {
+  ok: boolean;
+  error?: string;
+  message?: string;
+}
+
 export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { fetchPetition } = useFetch();
 
   const form = useForm<InviteFormValue>({
     resolver: zodResolver(InviteFormSchema),
@@ -51,7 +60,32 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
   const submitHandler = useCallback(
     async (data: InviteFormValue) => {
       setLoading(true);
-      console.log('data', data);
+      const { update, id: toastId } = toast({
+        title: 'Processing...',
+        description: 'Please wait while the data is being processed',
+        variant: 'default',
+      });
+      const response = await fetchPetition<ResponseRegisterMail>({
+        url: URL_INVITE_USER,
+        method: 'POST',
+        body: data,
+      });
+
+      if (response.error) {
+        update({
+          id: toastId,
+          title: 'Error registering the user',
+          description: response.error,
+          variant: 'destructive',
+        });
+      } else if (response.message) {
+        update({
+          id: toastId,
+          title: 'User registered successfully',
+          description: response.message,
+          variant: 'success',
+        });
+      }
 
       setLoading(false);
     },
@@ -116,7 +150,14 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
             )}
           />
           <MultipleBucketComboboxField
-            bucketOptions={bucketOptions}
+            bucketOptions={
+              bucketOptions
+                ? [
+                    { name: ACCESS_TO_ALL_SCOPES, creationDate: new Date() },
+                    ...bucketOptions,
+                  ]
+                : []
+            }
             form={form}
           />
           <Button disabled={loading} className='w-full !mt-6' type='submit'>

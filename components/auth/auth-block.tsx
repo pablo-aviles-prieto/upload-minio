@@ -11,6 +11,7 @@ export const AuthBlock = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
 
+  // TODO: Finish the forgot password modal
   return (
     <>
       <ForgotPasswordModal
