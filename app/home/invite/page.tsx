@@ -31,7 +31,7 @@ export default async function Invite() {
         Invite a friend
       </h1>
       <ScrollArea className='h-[calc(100vh-128px)] w-full'>
-        <div className='flex flex-col items-center justify-center max-w-xl mx-auto space-y-8 my-4 px-4 sm:px-2'>
+        <div className='flex flex-col items-center justify-center max-w-xl mx-auto space-y-8 my-4 px-2'>
           <InviteForm bucketOptions={buckets} />
         </div>
       </ScrollArea>
