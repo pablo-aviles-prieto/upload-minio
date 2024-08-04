@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export const RegisterFormUserSchema = z
   .object({
-    email: z.string(),
+    email: z.string().email({ message: 'Enter a valid email address' }),
     password: z
       .string()
       .min(8, { message: 'Password must be at least 8 characters long' })
@@ -13,6 +13,10 @@ export const RegisterFormUserSchema = z
       .regex(/[0-9]/, { message: 'Password must include a number' })
       .regex(/[\W_]+/, { message: 'Password must include a symbol' }),
     confirmPassword: z.string(),
+    role: z.nativeEnum(UserRole).optional(),
+    scopes: z.array(z.string()).optional(),
+    status: z.nativeEnum(UserStatus).optional(),
+    theme: z.nativeEnum(ThemeOptions).optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords doesn't match",

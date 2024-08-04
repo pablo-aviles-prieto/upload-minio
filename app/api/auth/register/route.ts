@@ -21,7 +21,6 @@ export const POST = async (req: NextRequest) => {
   const data = (await req.json()) as ReqObjI;
 
   try {
-    console.log('data', data);
     RegisterAPIUserSchema.parse(data);
     await connectDb();
 

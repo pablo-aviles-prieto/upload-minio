@@ -47,6 +47,7 @@ import {
   CloudUpload,
   FileUp,
   ExternalLink,
+  UserPlus,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -234,4 +235,5 @@ export const Icons = {
   cloudUpload: CloudUpload,
   fileUp: FileUp,
   externalLink: ExternalLink,
+  userPlus: UserPlus,
 };

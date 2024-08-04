@@ -12,10 +12,16 @@ export const errorMessages = {
   fileSizeExceeded: 'File size exceeds the maximum allowed limit (10MB)',
   genericFileErrorTitle: 'There was an error uploading the file',
   tryAgain: `Please, try again later`,
+  inviteUser: 'There was an error inviting the user. Try again later',
+  registerTokenExpired: 'The invitation link has expired',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
 export const URL_RECOVER_PASSWORD = `/api/auth/recover-password`;
+export const URL_INVITE_USER = `/api/invite`;
+export const URL_REGISTER_USER = `/api/auth/register`;
+
+export const ACCESS_TO_ALL_SCOPES = 'All';
 
 export enum ThemeOptions {
   SYSTEM = 'system',
