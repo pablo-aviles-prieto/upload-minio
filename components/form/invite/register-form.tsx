@@ -43,6 +43,7 @@ interface ResponseUser {
   createdUser?: User;
 }
 
+// TODO: Add a signup icon to the button
 export const RegisterForm = ({ email, role, scopes }: RegisterFormProps) => {
   const [loading, setLoading] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

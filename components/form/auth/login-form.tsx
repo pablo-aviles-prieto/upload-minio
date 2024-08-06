@@ -35,6 +35,7 @@ type Props = {
   setOpenForgotPasswordModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// TODO: Add a login icon to the button
 export const LoginForm = ({
   callbackUrl,
   setOpenForgotPasswordModal,

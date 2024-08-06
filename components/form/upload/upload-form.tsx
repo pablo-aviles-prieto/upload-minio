@@ -20,9 +20,10 @@ import { InputFileBlock } from './input-file-block';
 import { type FilePondInitialFile } from 'filepond';
 import { FilePond } from 'react-filepond';
 import { errorMessages, FILE_MAX_SIZE, URL_PROCESS_FILE } from '@/utils/const';
-import type { UploadedFiles } from '@/types';
+import { UserRole, type CustomSession, type UploadedFiles } from '@/types';
 import { Icons } from '@/components/icons';
 import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
+import { parseBucketOptions } from '@/utils/parse-bucket-options';
 
 const defaultValues = {
   bucket: '',
@@ -31,9 +32,10 @@ const defaultValues = {
 
 interface UploadFormProps {
   bucketOptions: BucketItemFromList[] | undefined;
+  userData: CustomSession['user'];
 }
 
-export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
+export const UploadForm = ({ bucketOptions, userData }: UploadFormProps) => {
   const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFiles[]>([]);
   const [files, setFiles] = useState<Array<FilePondInitialFile | File | Blob>>(
@@ -45,6 +47,12 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
   const form = useForm<UploadFormValue>({
     resolver: zodResolver(UploadFormSchema),
     defaultValues,
+  });
+
+  const parsedBucketOptions = parseBucketOptions({
+    bucketOptions: bucketOptions ?? [],
+    scopes: userData?.scopes ?? [],
+    role: userData?.role ?? UserRole.TRIAL,
   });
 
   const formFiles = form.watch('files'); // Watch for changes in files
@@ -129,7 +137,10 @@ export const UploadForm = ({ bucketOptions }: UploadFormProps) => {
           onSubmit={form.handleSubmit(submitHandler)}
           className='w-full space-y-6'
         >
-          <BucketComboboxField bucketOptions={bucketOptions} form={form} />
+          <BucketComboboxField
+            bucketOptions={parsedBucketOptions}
+            form={form}
+          />
           <Controller
             name='files'
             control={form.control}

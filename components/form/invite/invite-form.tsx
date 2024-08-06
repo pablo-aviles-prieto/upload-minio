@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BucketItemFromList } from 'minio';
 import { useToast } from '@/components/ui/use-toast';
@@ -56,6 +56,14 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
     resolver: zodResolver(InviteFormSchema),
     defaultValues,
   });
+
+  const parsedBucketOptions = useMemo(() => {
+    if (!bucketOptions) return [];
+    return [
+      { name: ACCESS_TO_ALL_SCOPES, creationDate: new Date() },
+      ...bucketOptions,
+    ];
+  }, [bucketOptions]);
 
   const submitHandler = useCallback(
     async (data: InviteFormValue) => {
@@ -150,14 +158,7 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
             )}
           />
           <MultipleBucketComboboxField
-            bucketOptions={
-              bucketOptions
-                ? [
-                    { name: ACCESS_TO_ALL_SCOPES, creationDate: new Date() },
-                    ...bucketOptions,
-                  ]
-                : []
-            }
+            bucketOptions={parsedBucketOptions}
             form={form}
           />
           <Button disabled={loading} className='w-full !mt-6' type='submit'>
