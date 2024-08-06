@@ -31,6 +31,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 interface ComboboxFieldProps {
   bucketOptions: BucketItemFromList[] | undefined;
   form: UseFormReturn<any, any, undefined>;
+  disabled?: boolean;
 }
 
 const WIDTH = 'w-full';
@@ -38,8 +39,8 @@ const WIDTH = 'w-full';
 export const MultipleBucketComboboxField = ({
   bucketOptions,
   form,
+  disabled = false,
 }: ComboboxFieldProps) => {
-  const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverWidth, setPopoverWidth] = useState<string>('auto');
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -63,7 +64,6 @@ export const MultipleBucketComboboxField = ({
       ? currentValue.filter((name: string) => name !== bucketName)
       : [...currentValue, bucketName];
     form.setValue('buckets', newValue);
-    setPopoverOpen(false);
   };
 
   return (
@@ -73,12 +73,13 @@ export const MultipleBucketComboboxField = ({
       render={({ field }) => (
         <FormItem className='flex flex-col'>
           <FormLabel>Buckets</FormLabel>
-          <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+          <Popover>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant='outline'
                   role='combobox'
+                  disabled={disabled}
                   className={cn(
                     `${WIDTH} justify-between`,
                     !field.value.length && 'text-muted-foreground'

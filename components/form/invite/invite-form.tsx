@@ -47,8 +47,6 @@ interface ResponseRegisterMail {
   message?: string;
 }
 
-// TODO: If the user selected the role of ADMIN he will have access to all and should
-// have disabled the buckets dropdown
 export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -58,6 +56,8 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
     resolver: zodResolver(InviteFormSchema),
     defaultValues,
   });
+
+  const role = form.watch('role');
 
   const parsedBucketOptions = useMemo(() => {
     if (!bucketOptions) return [];
@@ -84,14 +84,14 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
       if (response.error) {
         update({
           id: toastId,
-          title: 'Error registering the user',
+          title: 'Error inviting the user',
           description: response.error,
           variant: 'destructive',
         });
       } else if (response.message) {
         update({
           id: toastId,
-          title: 'User registered successfully',
+          title: 'User invited successfully',
           description: response.message,
           variant: 'success',
         });
@@ -136,7 +136,12 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    if (value === UserRole.ADMIN) {
+                      form.setValue('buckets', [ACCESS_TO_ALL_SCOPES]);
+                    }
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -162,6 +167,7 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
           <MultipleBucketComboboxField
             bucketOptions={parsedBucketOptions}
             form={form}
+            disabled={role === UserRole.ADMIN}
           />
           <Button disabled={loading} className='w-full !mt-6' type='submit'>
             <Icons.userPlus className='mr-1 w-4 h-4' /> Invite
