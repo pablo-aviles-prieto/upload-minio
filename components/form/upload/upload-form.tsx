@@ -21,7 +21,7 @@ import { type FilePondInitialFile } from 'filepond';
 import { FilePond } from 'react-filepond';
 import { errorMessages, FILE_MAX_SIZE, URL_PROCESS_FILE } from '@/utils/const';
 import { UserRole, type CustomSession, type UploadedFiles } from '@/types';
-import { Icons } from '@/components/icons';
+import { Icons } from '@/components/icons/icons';
 import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
 import { parseBucketOptions } from '@/utils/parse-bucket-options';
 

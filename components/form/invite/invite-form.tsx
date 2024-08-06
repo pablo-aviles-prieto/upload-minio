@@ -15,7 +15,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BucketItemFromList } from 'minio';
 import { useToast } from '@/components/ui/use-toast';
-import { Icons } from '@/components/icons';
+import { Icons } from '@/components/icons/icons';
 import { InviteFormSchema, InviteFormValue } from '@/schema/invite-form-schema';
 import { UserRole } from '@/types';
 import { MultipleBucketComboboxField } from './multiple-bucket-combobox-field';
@@ -47,6 +47,8 @@ interface ResponseRegisterMail {
   message?: string;
 }
 
+// TODO: If the user selected the role of ADMIN he will have access to all and should
+// have disabled the buckets dropdown
 export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();

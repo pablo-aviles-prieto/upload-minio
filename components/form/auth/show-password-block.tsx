@@ -1,6 +1,6 @@
 'use client';
 
-import { Icons } from '../../icons';
+import { Icons } from '../../icons/icons';
 
 type Props = {
   showPassword: boolean;

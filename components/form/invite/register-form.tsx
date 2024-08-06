@@ -30,6 +30,7 @@ import {
   RegisterFormUserValue,
 } from '@/schema/register-form-user-schema';
 import { User } from '@/models';
+import { Icons } from '@/components/icons/icons';
 
 interface RegisterFormProps {
   email: string;
@@ -43,7 +44,6 @@ interface ResponseUser {
   createdUser?: User;
 }
 
-// TODO: Add a signup icon to the button
 export const RegisterForm = ({ email, role, scopes }: RegisterFormProps) => {
   const [loading, setLoading] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -204,7 +204,7 @@ export const RegisterForm = ({ email, role, scopes }: RegisterFormProps) => {
           )}
         />
         <Button disabled={loading} className='w-full !mt-4' type='submit'>
-          Register
+          <Icons.userPlus className='mr-1 w-4 h-4' /> Register
         </Button>
       </form>
     </Form>

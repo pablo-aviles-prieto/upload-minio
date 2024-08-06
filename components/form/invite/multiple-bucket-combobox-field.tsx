@@ -121,7 +121,8 @@ export const MultipleBucketComboboxField = ({
             </PopoverContent>
           </Popover>
           <FormDescription>
-            Select the buckets that the user will have access to
+            Select the buckets that the user will have access to (Admins have
+            access to all the buckets)
           </FormDescription>
           <FormMessage />
         </FormItem>

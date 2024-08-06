@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import { formatFileSize } from '@/utils/format-file-size';
-import { Icons } from '../icons';
+import { Icons } from '../icons/icons';
 import { getEllipsed } from '@/utils/const';
 
 type CardProps = React.ComponentProps<typeof Card>;

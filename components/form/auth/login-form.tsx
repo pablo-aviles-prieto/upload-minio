@@ -24,6 +24,7 @@ import {
   LoginUserFormValue,
   LoginUserSchema,
 } from '@/schema/login-user-schema';
+import { Icons } from '@/components/icons/icons';
 
 const defaultValues = {
   email: '',
@@ -35,7 +36,6 @@ type Props = {
   setOpenForgotPasswordModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// TODO: Add a login icon to the button
 export const LoginForm = ({
   callbackUrl,
   setOpenForgotPasswordModal,
@@ -148,7 +148,7 @@ export const LoginForm = ({
           Forgot your password? Recover it!
         </p>
         <Button disabled={loading} className='w-full !mt-0' type='submit'>
-          Login
+          <Icons.login className='mr-1 w-4 h-4' /> Login
         </Button>
       </form>
     </Form>
