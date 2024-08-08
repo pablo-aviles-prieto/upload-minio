@@ -48,3 +48,5 @@ export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';
 export const URL_PROCESS_FILE = `/api/upload/process-file`;
 
 export const FILE_MAX_SIZE = 10 * 1024 * 1024; // 10MB
+
+export const HEADER_HEIGHT = '64px';

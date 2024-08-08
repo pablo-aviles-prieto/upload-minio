@@ -1,6 +1,6 @@
 import { authOptions } from '@/lib/auth-options';
 import { CustomSession, UserRole } from '@/types';
-import { HEADER_OPTIONS } from '@/utils/const';
+import { HEADER_HEIGHT, HEADER_OPTIONS } from '@/utils/const';
 import { getServerSession, NextAuthOptions } from 'next-auth';
 import Link from 'next/link';
 
@@ -12,7 +12,8 @@ export const Header = async () => {
   // TODO: Set as primary color the option with the current path
   return (
     <nav
-      className='flex items-center justify-between px-8 min-h-16'
+      className={`flex items-center justify-between px-8`}
+      style={{ height: HEADER_HEIGHT }}
       aria-label='Main Navigation'
     >
       <Link className='hover:text-primary' href='/home'>
