@@ -1,4 +1,4 @@
-import { SelectBucket } from '@/components/pages/file-page/select-bucket';
+import { FilesPage } from '@/components/pages/file-page/files-page';
 import { authOptions } from '@/lib/auth-options';
 import { listAllBuckets } from '@/services/minio/list-all-buckets';
 import { CustomSession, UserRole } from '@/types';
@@ -46,14 +46,12 @@ export default async function Files({ searchParams }: FilesProps) {
     availableBuckets.find((bckt) => bckt.name === bucket) ??
     availableBuckets[0];
 
-  console.log('availableBuckets', availableBuckets);
-  console.log('selectedBucket!', selectedBucket);
   return (
     <div
       className='flex items-center justify-center px-2'
       style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT} * 2)` }}
     >
-      <SelectBucket
+      <FilesPage
         availableBuckets={availableBuckets}
         defaultSelectedBucket={selectedBucket}
       />
