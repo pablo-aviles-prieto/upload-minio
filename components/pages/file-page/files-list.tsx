@@ -19,6 +19,9 @@ export const FilesList = ({ bucketName }: FilesListProps) => {
   const [files, setFiles] = useState<BucketItem[]>([]);
 
   useEffect(() => {
+    // Clear the files state when the bucket changes
+    setFiles([]);
+
     const fetchStream = async () => {
       const response = await fetch(
         `${URL_LIST_FILES}?bucketName=${bucketName}`
