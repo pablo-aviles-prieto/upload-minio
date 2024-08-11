@@ -1,3 +1,4 @@
+import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
 import { URL_LIST_FILES } from '@/utils/const';
 import React, { useEffect, useState } from 'react';
 
@@ -6,6 +7,7 @@ interface BucketItem {
   size: number;
   etag: string;
   lastModified: string;
+  url: string;
   prefix?: string;
 }
 
@@ -15,7 +17,6 @@ interface FilesListProps {
 
 export const FilesList = ({ bucketName }: FilesListProps) => {
   const [files, setFiles] = useState<BucketItem[]>([]);
-  console.log('files', files);
 
   useEffect(() => {
     const fetchStream = async () => {
@@ -44,15 +45,16 @@ export const FilesList = ({ bucketName }: FilesListProps) => {
   }, [bucketName]);
 
   return (
-    <div>
-      <h2>Files in {bucketName}</h2>
-      <ul>
-        {files.map((file, i) => (
-          <li key={`${file.name} ${i}`}>
-            {file.name} (Size: {file.size} bytes)
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+      {files.map((file, i) => (
+        <li key={`${file.name} ${i}`}>
+          <UploadedFilesCard
+            fileName={file.name}
+            fileUrl={file.url}
+            fileSize={file.size}
+          />
+        </li>
+      ))}
+    </ul>
   );
 };

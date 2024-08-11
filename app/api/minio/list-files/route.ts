@@ -1,11 +1,24 @@
 import { retrieveMinioClient } from '@/lib/minio-client';
 import { errorMessages } from '@/utils/const';
 import { NextRequest, NextResponse } from 'next/server';
-import { BucketItem, BucketStream } from 'minio';
+import { BucketItem, BucketStream, Client as MinioClient } from 'minio';
 
-async function* minioToIterator(stream: BucketStream<BucketItem>) {
-  for await (const obj of stream) {
-    yield new TextEncoder().encode(JSON.stringify(obj) + '\n');
+async function* minioToIterator(
+  stream: BucketStream<BucketItem>,
+  bucketName: string,
+  minioClient: MinioClient
+) {
+  for await (const minioObj of stream) {
+    const presignedUrl = await minioClient.presignedGetObject(
+      bucketName,
+      minioObj.name,
+      24 * 60 * 60
+    );
+    const enrichedObj = {
+      ...minioObj,
+      url: presignedUrl,
+    };
+    yield new TextEncoder().encode(JSON.stringify(enrichedObj) + '\n');
   }
 }
 
@@ -23,7 +36,7 @@ export const GET = async (req: NextRequest) => {
     const minioClient = retrieveMinioClient();
     const stream = minioClient.listObjectsV2(bucketName, '', true, '');
 
-    const iterator = minioToIterator(stream);
+    const iterator = minioToIterator(stream, bucketName, minioClient);
     const readableStream = new ReadableStream({
       async pull(controller) {
         const { value, done } = await iterator.next();

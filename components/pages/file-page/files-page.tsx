@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { SelectScrollable } from '../../form/select/select';
 import { BucketItemFromList } from 'minio';
 import { FilesList } from './files-list';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface FilePageProps {
   availableBuckets: BucketItemFromList[];
@@ -19,9 +20,10 @@ export const FilesPage = ({
   );
 
   return (
-    <div>
+    <>
       <SelectScrollable
         maxWidth='max-w-[300px]'
+        classes='mx-auto'
         options={availableBuckets.map((bucket) => ({
           value: bucket.name,
           label: bucket.name,
@@ -30,9 +32,9 @@ export const FilesPage = ({
         onChange={(opt) => setSelectedBucket(opt)}
         placeholder='Available buckets'
       />
-      <div className='pt-4'>
+      <ScrollArea className='h-[calc(100vh-100px)] w-full pt-4 pb-2 px-2 pr-3'>
         <FilesList bucketName={selectedBucket} />
-      </div>
-    </div>
+      </ScrollArea>
+    </>
   );
 };

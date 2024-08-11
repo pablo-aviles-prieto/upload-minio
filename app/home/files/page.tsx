@@ -47,14 +47,9 @@ export default async function Files({ searchParams }: FilesProps) {
     availableBuckets[0];
 
   return (
-    <div
-      className='flex items-center justify-center px-2'
-      style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT} * 2)` }}
-    >
-      <FilesPage
-        availableBuckets={availableBuckets}
-        defaultSelectedBucket={selectedBucket}
-      />
-    </div>
+    <FilesPage
+      availableBuckets={availableBuckets}
+      defaultSelectedBucket={selectedBucket}
+    />
   );
 }

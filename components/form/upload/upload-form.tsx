@@ -120,16 +120,18 @@ export const UploadForm = ({ bucketOptions, userData }: UploadFormProps) => {
     <>
       {uploadedFiles.length > 0 && (
         <div className='w-full'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
             {uploadedFiles.map((file) => (
-              <UploadedFilesCard
-                key={file.name}
-                fileName={file.name}
-                fileUrl={file.url}
-                fileSize={file.size}
-              />
+              <li key={file.name}>
+                <UploadedFilesCard
+                  key={file.name}
+                  fileName={file.name}
+                  fileUrl={file.url}
+                  fileSize={file.size}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
       <Form {...form}>
