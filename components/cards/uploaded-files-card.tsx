@@ -36,12 +36,17 @@ export function UploadedFilesCard({
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button variant='secondary' className='w-full'>
-          <Icons.externalLink className='mr-1 h-4 w-4' />
-          <Link href={fileUrl} rel='noopener noreferrer' target='_blank'>
+        <Link
+          className='w-full'
+          href={fileUrl}
+          rel='noopener noreferrer'
+          target='_blank'
+        >
+          <Button variant='secondary' className='w-full'>
+            <Icons.externalLink className='mr-1 h-4 w-4' />
             Preview file
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
