@@ -10,7 +10,7 @@ import {
 import Link from 'next/link';
 import { formatFileSize } from '@/utils/format-file-size';
 import { Icons } from '../icons/icons';
-import { getEllipsed } from '@/utils/const';
+import { FilePreview } from '../pages/file-page/file-preview';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -29,11 +29,20 @@ export function UploadedFilesCard({
 }: UploadedFilesCardProps) {
   return (
     <Card className={cn('w-full', className)} {...props}>
-      <CardHeader>
-        <CardTitle className={`${getEllipsed} text-sm`}>{fileName}</CardTitle>
-        <CardDescription className='text-xs'>
-          {formatFileSize(fileSize)}
-        </CardDescription>
+      <CardHeader className='flex flex-row gap-x-4'>
+        <div className='w-[100px]'>
+          <FilePreview fileName={fileName} />
+        </div>
+        <div className='w-[calc(100%-116px)] max-h-[113px] flex flex-col justify-between break-all'>
+          <CardTitle
+            className={`text-sm overflow-hidden text-ellipsis line-clamp-4`}
+          >
+            {fileName}
+          </CardTitle>
+          <CardDescription className='text-xs font-bold text-right'>
+            {formatFileSize(fileSize)}
+          </CardDescription>
+        </div>
       </CardHeader>
       <CardFooter>
         <Link
