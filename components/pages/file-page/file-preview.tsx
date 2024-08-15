@@ -26,16 +26,18 @@ export const FilePreview = ({ fileName, fileUrl }: FilePreviewProps) => {
     [fileType]
   );
 
-  return isImage ? (
+  return (
     <Link
       className='w-full h-full flex justify-center items-center'
       href={fileUrl}
       rel='noopener noreferrer'
       target='_blank'
     >
-      <img src={fileUrl} alt={fileName} className='w-full object-contain' />
+      {isImage ? (
+        <img src={fileUrl} alt={fileName} className='w-full object-contain' />
+      ) : (
+        <FileIcon extension={fileType} {...defaultStyles[validFileType]} />
+      )}
     </Link>
-  ) : (
-    <FileIcon extension={fileType} {...defaultStyles[validFileType]} />
   );
 };

@@ -36,7 +36,7 @@ export function UploadedFilesCard({
         </div>
         <div className='w-[calc(100%-(125px+16px))] max-h-[150px] flex flex-col justify-between break-all !m-0'>
           <CardTitle
-            className={`text-sm overflow-hidden text-ellipsis line-clamp-4`}
+            className={`text-sm overflow-hidden text-ellipsis line-clamp-6`}
           >
             {fileName}
           </CardTitle>
