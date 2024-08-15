@@ -2,13 +2,13 @@ import { IMAGE_EXTENSIONS } from '@/utils/const';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { DefaultExtensionType, FileIcon, defaultStyles } from 'react-file-icon';
+import { PDFPreview } from './pdf-preview';
 
 interface FilePreviewProps {
   fileName: string;
   fileUrl: string;
 }
 
-// TODO: Add preview for pdfs with react-pdf??? https://github.com/wojtekmaj/react-pdf
 export const FilePreview = ({ fileName, fileUrl }: FilePreviewProps) => {
   const fileType = useMemo(() => fileName.split('.').pop(), [fileName]);
 
@@ -26,7 +26,11 @@ export const FilePreview = ({ fileName, fileUrl }: FilePreviewProps) => {
     [fileType]
   );
 
-  return (
+  return validFileType === 'pdf' ? (
+    <div className='w-full h-full flex justify-center items-center'>
+      <PDFPreview pdfFile={fileUrl} />
+    </div>
+  ) : (
     <Link
       className='w-full h-full flex justify-center items-center'
       href={fileUrl}
