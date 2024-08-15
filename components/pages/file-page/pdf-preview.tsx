@@ -59,7 +59,7 @@ export const PDFPreview = ({ pdfFile }: PDFPreviewProps) => {
         >
           <Icons.chevronLeft className='h-4 w-4' />
         </Button>
-        <span className='text-xs'>
+        <span className='text-xs text-[11px]'>
           {actualPage} of {maxPages}
         </span>
         <Button
