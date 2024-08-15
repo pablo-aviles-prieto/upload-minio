@@ -25,13 +25,13 @@ export const PDFPreview = ({ pdfFile }: PDFPreviewProps) => {
     []
   );
 
-  const changePageHandler = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    page: number
-  ) => {
-    e.stopPropagation();
-    setActualPage(page);
-  };
+  const changePageHandler = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
+      e.stopPropagation();
+      setActualPage(page);
+    },
+    []
+  );
 
   return (
     <div className='relative'>
