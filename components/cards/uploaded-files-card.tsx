@@ -20,6 +20,7 @@ interface UploadedFilesCardProps extends CardProps {
   fileSize: number;
 }
 
+// TODO: Check that it looks nice when uploaded files (since its modified on the /home/files page)
 export function UploadedFilesCard({
   fileName,
   fileUrl,
@@ -29,11 +30,11 @@ export function UploadedFilesCard({
 }: UploadedFilesCardProps) {
   return (
     <Card className={cn('w-full', className)} {...props}>
-      <CardHeader className='flex flex-row gap-x-4'>
-        <div className='w-[100px]'>
-          <FilePreview fileName={fileName} />
+      <CardHeader className='flex flex-row gap-x-4 h-[198px]'>
+        <div className='w-[125px] overflow-hidden'>
+          <FilePreview fileName={fileName} fileUrl={fileUrl} />
         </div>
-        <div className='w-[calc(100%-116px)] max-h-[113px] flex flex-col justify-between break-all'>
+        <div className='w-[calc(100%-(125px+16px))] max-h-[150px] flex flex-col justify-between break-all !m-0'>
           <CardTitle
             className={`text-sm overflow-hidden text-ellipsis line-clamp-4`}
           >

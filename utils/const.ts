@@ -50,3 +50,16 @@ export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';
 export const FILE_MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
 export const HEADER_HEIGHT = '64px';
+
+export const IMAGE_EXTENSIONS = [
+  'bmp',
+  'gif',
+  'jpeg',
+  'JPEG',
+  'jpg',
+  'JPG',
+  'png',
+  'svg',
+  'tif',
+  'tiff',
+];

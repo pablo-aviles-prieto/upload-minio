@@ -15,9 +15,12 @@ interface FilesListProps {
   bucketName: string;
 }
 
+// TODO: Add much more files into the test bucket to check how its fetched (to check
+// the pagination basically)
 export const FilesList = ({ bucketName }: FilesListProps) => {
   const [files, setFiles] = useState<BucketItem[]>([]);
 
+  // TODO: Try to fetch with react query ??
   useEffect(() => {
     // Clear the files state when the bucket changes
     setFiles([]);
