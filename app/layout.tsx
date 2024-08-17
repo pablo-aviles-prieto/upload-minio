@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
-import Providers from '@/components/layout/providers';
 import { getServerSession } from 'next-auth';
 import { Inter } from 'next/font/google';
+import Providers from '@/components/layout/providers';
+import '@/services/pdf/worker';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

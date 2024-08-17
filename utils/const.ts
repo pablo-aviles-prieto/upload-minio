@@ -20,6 +20,8 @@ export const DEFAULT_CALLBACK_URL = '/home';
 export const URL_RECOVER_PASSWORD = `/api/auth/recover-password`;
 export const URL_INVITE_USER = `/api/invite`;
 export const URL_REGISTER_USER = `/api/auth/register`;
+export const URL_PROCESS_FILE = `/api/minio/upload/process-file`;
+export const URL_LIST_FILES = `/api/minio/list-files`;
 
 export const ACCESS_TO_ALL_SCOPES = 'All';
 
@@ -45,8 +47,19 @@ export const HEADER_OPTIONS = [
 
 export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';
 
-export const URL_PROCESS_FILE = `/api/upload/process-file`;
-
 export const FILE_MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
 export const HEADER_HEIGHT = '64px';
+
+export const IMAGE_EXTENSIONS = [
+  'bmp',
+  'gif',
+  'jpeg',
+  'JPEG',
+  'jpg',
+  'JPG',
+  'png',
+  'svg',
+  'tif',
+  'tiff',
+];
