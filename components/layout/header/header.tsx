@@ -3,6 +3,7 @@ import { CustomSession, UserRole } from '@/types';
 import { HEADER_HEIGHT, HEADER_OPTIONS } from '@/utils/const';
 import { getServerSession, NextAuthOptions } from 'next-auth';
 import Link from 'next/link';
+import ThemeToggle from '../theme/theme-toggle';
 
 export const Header = async () => {
   const session = await getServerSession(
@@ -35,6 +36,7 @@ export const Header = async () => {
             {opt.label}
           </Link>
         ))}
+        <ThemeToggle />
       </div>
     </nav>
   );

@@ -4,6 +4,7 @@ import { UserRole, UserStatus } from '@/types/user';
 import { v4 as uuidv4 } from 'uuid';
 import { ThemeOptions } from '@/utils/const';
 
+// TODO: Check that lastLoginDate is updated when logged in
 export interface User extends Document {
   _id: string;
   email: string;

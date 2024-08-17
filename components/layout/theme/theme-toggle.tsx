@@ -17,6 +17,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { ThemeOptions } from '@/utils/const';
 import { getValuesFromEnum } from '@/utils/get-values-from-enum';
 
+// TODO: Update the theme on DB
 export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const { data, update } = useSession();

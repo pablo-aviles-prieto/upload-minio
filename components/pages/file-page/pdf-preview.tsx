@@ -6,6 +6,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons/icons';
 import Link from 'next/link';
+import { useTheme } from 'next-themes';
 
 const options = {
   cMapUrl: '/cmaps/',
@@ -19,6 +20,7 @@ interface PDFPreviewProps {
 export const PDFPreview = ({ pdfFile }: PDFPreviewProps) => {
   const [maxPages, setMaxPages] = useState<number>();
   const [actualPage, setActualPage] = useState(1);
+  const { resolvedTheme } = useTheme();
 
   const onDocumentLoadSuccess = useCallback(
     ({ numPages: nextNumPages }: PDFDocumentProxy) => setMaxPages(nextNumPages),
@@ -49,7 +51,11 @@ export const PDFPreview = ({ pdfFile }: PDFPreviewProps) => {
           <Page pageNumber={actualPage} width={107} />
         </Document>
       </Link>
-      <div className='z-10 flex items-center absolute bottom-0 w-full bg-slate-700/75 justify-between'>
+      <div
+        className={`z-10 flex items-center absolute bottom-0 w-full ${
+          resolvedTheme === 'light' ? 'bg-slate-100/75' : 'bg-slate-700/75'
+        } justify-between`}
+      >
         <Button
           className='w-6 h-6'
           variant='outline'
