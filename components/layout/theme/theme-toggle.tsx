@@ -24,7 +24,6 @@ export default function ThemeToggle() {
   const session = data as CustomSession;
   const { fetchPetition } = useFetch();
   const { toast } = useToast();
-  console.log('session', session);
 
   const themeOptions = getValuesFromEnum(ThemeOptions);
 

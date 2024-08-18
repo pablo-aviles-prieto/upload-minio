@@ -1,4 +1,6 @@
 import { FilesPage } from '@/components/pages/file-page/files-page';
+import { GenericPage } from '@/components/pages/generic-page/generic-page';
+import { Heading } from '@/components/ui/heading';
 import { authOptions } from '@/lib/auth-options';
 import { listAllBuckets } from '@/services/minio/list-all-buckets';
 import { CustomSession, UserRole } from '@/types';
@@ -29,16 +31,7 @@ export default async function Files({ searchParams }: FilesProps) {
 
   if (availableBuckets.length === 0) {
     return (
-      <div
-        className={`flex flex-col gap-y-4 items-center justify-center px-2`}
-        style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT} * 2)` }}
-      >
-        <p className='text-6xl'>🥺</p>
-        <p>
-          There are no available buckets for your account. Please, contact the
-          administrator.
-        </p>
-      </div>
+      <GenericPage text='There are no available buckets for your account. Please, contact the administrator.' />
     );
   }
 
@@ -47,9 +40,16 @@ export default async function Files({ searchParams }: FilesProps) {
     availableBuckets[0];
 
   return (
-    <FilesPage
-      availableBuckets={availableBuckets}
-      defaultSelectedBucket={selectedBucket}
-    />
+    <>
+      <Heading
+        customClasses='max-w-[300px] my-4 mx-auto'
+        title='View files'
+        description='Choose a bucket to explore the files'
+      />
+      <FilesPage
+        availableBuckets={availableBuckets}
+        defaultSelectedBucket={selectedBucket}
+      />
+    </>
   );
 }

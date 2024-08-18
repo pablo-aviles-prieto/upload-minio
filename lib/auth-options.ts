@@ -74,8 +74,6 @@ export const authOptions = {
     }) {
       // This callback is called whenever a JWT is created or updated.
       // When signing in, `user` will contain the user data returned by the `authorize` function.
-      console.log('user', user);
-      console.log('session', session);
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -84,6 +82,11 @@ export const authOptions = {
         token.theme = user.theme;
         token.status = user.status;
       }
+      // TODO: Remove console logs
+      // console.log('date now', Date.now());
+      // console.log('date', new Date());
+      // console.log('date IAT', new Date((token as unknown as any)?.exp * 1000));
+
       if (trigger === 'update' && session?.theme) {
         token.theme = session.theme;
       }

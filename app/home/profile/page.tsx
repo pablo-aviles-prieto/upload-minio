@@ -1,7 +1,13 @@
+import { Heading } from '@/components/ui/heading';
+
 export default function Profile() {
   return (
-    <div className='flex items-center justify-center min-h-[calc(100vh-64px)]'>
-      <div>Profile page</div>
+    <div>
+      <Heading
+        // maxWidthClass='max-w-[calc(100%-175px)]'
+        title='Profile'
+        description='Manage your account settings'
+      />
     </div>
   );
 }
