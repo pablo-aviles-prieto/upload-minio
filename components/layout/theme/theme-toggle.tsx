@@ -10,20 +10,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Check } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import type { CustomSession } from '@/types';
+import type { CustomSession, UpdateUserPreferencesResponse } from '@/types';
 import { useEffect } from 'react';
 import { useFetch } from '@/hooks/use-fetch';
 import { useToast } from '@/components/ui/use-toast';
-import { ThemeOptions } from '@/utils/const';
+import { ThemeOptions, URL_CHANGE_PREFERENCES } from '@/utils/const';
 import { getValuesFromEnum } from '@/utils/get-values-from-enum';
+import { capitalizeFirstLetter } from '@/utils/capitalize-first-letter';
 
-// TODO: Update the theme on DB
 export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const { data, update } = useSession();
   const session = data as CustomSession;
   const { fetchPetition } = useFetch();
   const { toast } = useToast();
+  console.log('session', session);
 
   const themeOptions = getValuesFromEnum(ThemeOptions);
 
@@ -35,19 +36,19 @@ export default function ThemeToggle() {
 
   const changeTheme = async (themeName: string) => {
     setTheme(themeName);
-    // await update({ theme: themeName });
-    // const response = await fetchPetition<UpdateUserPreferencesResponse>({
-    //   method: "POST",
-    //   url: URL_CHANGE_PREFERENCES,
-    //   body: { theme: themeName },
-    // });
-    // if (response.error) {
-    //   toast({
-    //     title: "Error updating preferences",
-    //     description: response.error,
-    //     variant: "destructive",
-    //   });
-    // }
+    await update({ theme: themeName });
+    const response = await fetchPetition<UpdateUserPreferencesResponse>({
+      method: 'POST',
+      url: URL_CHANGE_PREFERENCES,
+      body: { theme: themeName },
+    });
+    if (response.error) {
+      toast({
+        title: 'Error updating preferences',
+        description: response.error,
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -65,7 +66,7 @@ export default function ThemeToggle() {
             key={themeOpt.key}
             onClick={() => changeTheme(themeOpt.key)}
           >
-            {themeOpt.key}{' '}
+            {capitalizeFirstLetter(themeOpt.key)}{' '}
             {theme === themeOpt.key && (
               <Check className='w-[22px] h-[22px] pl-2' />
             )}

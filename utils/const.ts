@@ -14,6 +14,9 @@ export const errorMessages = {
   tryAgain: `Please, try again later`,
   inviteUser: 'There was an error inviting the user. Try again later',
   registerTokenExpired: 'The invitation link has expired',
+  relogAcc: 'Something happened, please relog into your account',
+  updatingTheme:
+    'There was an error updating the theme on database. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
@@ -22,6 +25,7 @@ export const URL_INVITE_USER = `/api/invite`;
 export const URL_REGISTER_USER = `/api/auth/register`;
 export const URL_PROCESS_FILE = `/api/minio/upload/process-file`;
 export const URL_LIST_FILES = `/api/minio/list-files`;
+export const URL_CHANGE_PREFERENCES = `/api/user/change-preferences`;
 
 export const ACCESS_TO_ALL_SCOPES = 'All';
 
