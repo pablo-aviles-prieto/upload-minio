@@ -1,4 +1,5 @@
 import { getEllipsed } from '@/utils/const';
+import { Separator } from './separator';
 
 interface HeadingProps {
   title: string;
@@ -17,6 +18,7 @@ export const Heading: React.FC<HeadingProps> = ({
       <p className={`text-sm text-muted-foreground ${getEllipsed}`}>
         {description}
       </p>
+      <Separator className='my-2' />
     </div>
   );
 };

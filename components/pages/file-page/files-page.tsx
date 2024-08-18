@@ -39,7 +39,7 @@ export const FilesPage = ({
         onChange={changeSelectHandler}
         placeholder='Available buckets'
       />
-      <ScrollArea className='h-[calc(100vh-192px)] w-full py-3 pb-2 px-2 pr-3'>
+      <ScrollArea className='h-[calc(100vh-201px)] w-full py-3 pb-2 px-2 pr-3'>
         <FilesList bucketName={selectedBucket} />
       </ScrollArea>
     </>

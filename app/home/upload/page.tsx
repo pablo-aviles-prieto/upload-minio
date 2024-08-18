@@ -18,7 +18,7 @@ export default async function Upload() {
         title='Upload up to 3 files'
         description='10MB max size per file'
       />
-      <ScrollArea className='h-[calc(100vh-152px)] w-full'>
+      <ScrollArea className='h-[calc(100vh-161px)] w-full'>
         <div className='flex flex-col items-center justify-center max-w-xl mx-auto space-y-8 my-4 px-2'>
           <UploadForm
             bucketOptions={buckets}
