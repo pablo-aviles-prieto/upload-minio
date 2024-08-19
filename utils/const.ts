@@ -35,6 +35,7 @@ export enum ThemeOptions {
   DARK = 'dark',
 }
 
+// TODO: Add icons to the header opts
 export const HEADER_OPTIONS = [
   { key: 'home', label: 'Home', icon: '', href: '/home' },
   { key: 'upload', label: 'Upload', icon: '', href: '/home/upload' },
