@@ -21,8 +21,9 @@ export const errorMessages = {
 
 export const DEFAULT_CALLBACK_URL = '/home';
 export const URL_RECOVER_PASSWORD = `/api/auth/recover-password`;
-export const URL_INVITE_USER = `/api/invite`;
+export const URL_RESET_PASSWORD = `/api/auth/reset-password`;
 export const URL_REGISTER_USER = `/api/auth/register`;
+export const URL_INVITE_USER = `/api/invite`;
 export const URL_PROCESS_FILE = `/api/minio/upload/process-file`;
 export const URL_LIST_FILES = `/api/minio/list-files`;
 export const URL_CHANGE_PREFERENCES = `/api/user/change-preferences`;
