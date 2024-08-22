@@ -18,3 +18,9 @@ export interface UpdateUserPreferencesResponse {
   error?: string;
   message?: string;
 }
+
+export interface ResetPasswordResponse {
+  ok: boolean;
+  error?: string;
+  message?: string;
+}

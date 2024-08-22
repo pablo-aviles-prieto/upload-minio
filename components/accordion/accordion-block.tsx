@@ -7,7 +7,6 @@ import {
 import type { AccordionData } from '@/types/accordion';
 
 interface AccordionBlockProps {
-  userId: string;
   accordionData: AccordionData[];
   accordionValue: string;
   onAccordionChange: (value: string) => void;

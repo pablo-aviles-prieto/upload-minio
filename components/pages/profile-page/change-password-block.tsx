@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { ResetPasswordForm } from "../forms/recover-password-form/reset-password-form";
-import { ResetPasswordFormValue } from "@/schemas/reset-password-schema";
-import { useFetch } from "@/hooks/use-fetch";
-import { useToast } from "../ui/use-toast";
-import type { ResetPasswordResponse } from "@/types";
-import { URL_RESET_PASSWORD } from "@/utils/const";
+import { useState } from 'react';
+import { ResetPasswordForm } from '@/components/form/auth/reset-password-form';
+import { ResetPasswordFormValue } from '@/schema/reset-password-schema';
+import { useFetch } from '@/hooks/use-fetch';
+import { useToast } from '@/components/ui/use-toast';
+import type { ResetPasswordResponse } from '@/types';
+import { URL_RESET_PASSWORD } from '@/utils/const';
 
 interface ChangePasswordBlockProps {
   userId: string;
@@ -24,21 +24,21 @@ export const ChangePasswordBlock = ({
   const onSubmit = async (data: ResetPasswordFormValue) => {
     setIsLoading(true);
     const response = await fetchPetition<ResetPasswordResponse>({
-      method: "POST",
+      method: 'POST',
       url: URL_RESET_PASSWORD,
       body: { userId: data.userId, password: data.password },
     });
     if (response.error) {
       toast({
-        title: "Error changing the password",
+        title: 'Error changing the password',
         description: response.error,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } else if (response.message) {
       toast({
-        title: "Password changed successfully",
+        title: 'Password changed successfully',
         description: response.message,
-        variant: "success",
+        variant: 'success',
       });
     }
     setIsLoading(false);
@@ -47,7 +47,7 @@ export const ChangePasswordBlock = ({
 
   return (
     <div>
-      <p className="pb-4 text-muted-foreground">
+      <p className='pb-4 text-muted-foreground'>
         After changing your password, you will need to use the new password for
         all future sign-in attempts
       </p>

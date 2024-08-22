@@ -17,6 +17,8 @@ export const errorMessages = {
   relogAcc: 'Something happened, please relog into your account',
   updatingTheme:
     'There was an error updating the theme on database. Try again later',
+  resetPassword:
+    'There was an error while resetting the password. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';

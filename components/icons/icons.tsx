@@ -236,4 +236,49 @@ export const Icons = {
   fileUp: FileUp,
   externalLink: ExternalLink,
   userPlus: UserPlus,
+  clockLoader: ({ ...props }: LucideProps) => (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className='lucide lucide-clipboard-plus'
+      {...props}
+    >
+      <style>
+        {
+          '@keyframes spinner_ZpfF{to{transform:rotate(360deg)}}.spinner_d9Sa{transform-origin:center}'
+        }
+      </style>
+      <path
+        strokeWidth={2}
+        d='M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm0 20a9 9 0 1 1 9-9 9 9 0 0 1-9 9Z'
+      />
+      <rect
+        width={1}
+        height={6}
+        x={11}
+        y={6}
+        className='spinner_d9Sa'
+        rx={1}
+        style={{
+          animation: 'spinner_ZpfF 9s linear infinite',
+        }}
+      />
+      <rect
+        width={1}
+        height={8}
+        x={11}
+        y={11}
+        className='spinner_d9Sa'
+        rx={1}
+        style={{
+          animation: 'spinner_ZpfF .75s linear infinite',
+        }}
+      />
+    </svg>
+  ),
 };
