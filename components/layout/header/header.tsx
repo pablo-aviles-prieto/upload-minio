@@ -37,6 +37,7 @@ export const Header = async () => {
           </Link>
         ))}
         <ThemeToggle />
+        {/* TODO: Add a logout button with a tooltip?¿ */}
       </div>
     </nav>
   );

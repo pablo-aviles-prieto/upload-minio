@@ -9,7 +9,7 @@ interface AccordionSectionProps {
   userId: string;
 }
 
-export const AccordionSection = ({ userId }: AccordionSectionProps) => {
+export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
   const [accordionValue, setAccordionValue] = useState<string>('');
 
   const resetAccordion = useCallback(
@@ -17,7 +17,6 @@ export const AccordionSection = ({ userId }: AccordionSectionProps) => {
     [setAccordionValue]
   );
 
-  // TODO: Finish accordion
   const accordionData: AccordionData[] = useMemo(
     () => [
       {
@@ -33,17 +32,8 @@ export const AccordionSection = ({ userId }: AccordionSectionProps) => {
           </div>
         ),
       },
-      {
-        key: 'change-password2',
-        title: 'Change Password2',
-        data: (
-          <div className='max-w-sm py-4 mx-auto'>
-            <p>Whatevah</p>
-          </div>
-        ),
-      },
     ],
-    [resetAccordion]
+    [resetAccordion, userId]
   );
 
   return (
