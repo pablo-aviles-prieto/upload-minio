@@ -15,11 +15,30 @@ export default async function Profile() {
   const availableScopes = (session: CustomSession) => {
     if (
       session.user?.role === UserRole.ADMIN ||
-      session.user?.role.includes(ACCESS_TO_ALL_SCOPES)
+      session.user?.scopes.includes(ACCESS_TO_ALL_SCOPES)
     ) {
-      return `${ACCESS_TO_ALL_SCOPES} scopes`;
+      return `${ACCESS_TO_ALL_SCOPES} buckets`;
     }
-    return `${session.user?.scopes.join(', ')} scopes`;
+
+    const scopes = session.user?.scopes || [];
+
+    // If there is only one scope, return it directly
+    if (scopes.length === 1) {
+      return `"${scopes[0]}" bucket`;
+    }
+
+    // If there are multiple scopes, format the output with "and" for the last item
+    if (scopes.length > 1) {
+      const allButLast = scopes
+        .slice(0, -1)
+        .map((scope) => `"${scope}"`)
+        .join(', ');
+      const last = `"${scopes[scopes.length - 1]}"`;
+      return `${allButLast} and ${last} buckets`;
+    }
+
+    // Fallback if no scopes are available
+    return 'No available buckets';
   };
 
   return (
@@ -42,7 +61,7 @@ export default async function Profile() {
               {capitalizeFirstLetter(session.user?.role ?? '')}
             </li>
             <li className={getEllipsed}>
-              <span className='text-muted-foreground'>Available scopes:</span>{' '}
+              <span className='text-muted-foreground'>Available buckets:</span>{' '}
               {availableScopes(session)}
             </li>
           </ul>
