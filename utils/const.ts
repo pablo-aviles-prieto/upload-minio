@@ -19,6 +19,7 @@ export const errorMessages = {
     'There was an error updating the theme on database. Try again later',
   resetPassword:
     'There was an error while resetting the password. Try again later',
+  filteringUsers: 'There was an error filtering the users. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
@@ -29,6 +30,7 @@ export const URL_INVITE_USER = `/api/invite`;
 export const URL_PROCESS_FILE = `/api/minio/upload/process-file`;
 export const URL_LIST_FILES = `/api/minio/list-files`;
 export const URL_CHANGE_PREFERENCES = `/api/user/change-preferences`;
+export const URL_FILTER_USERS = `/api/user/filter`;
 
 export const ACCESS_TO_ALL_SCOPES = 'All';
 

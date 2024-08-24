@@ -67,13 +67,6 @@ export default async function Profile() {
           </ul>
         </div>
         <ProfileAccordionSection userId={session?.user?.id ?? ''} />
-        <div className='my-4'>Admin section</div>
-        {/* 
-          TODO: Add an input to search for users by email to change 
-          their role, scopes and status (maybe after searching for the user
-          it might open the accordion with the options to be changed).
-          The user must be searched by a concrete email, not a part of it
-        */}
       </ScrollArea>
     </div>
   );

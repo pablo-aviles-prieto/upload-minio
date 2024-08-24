@@ -24,3 +24,9 @@ export interface ResetPasswordResponse {
   error?: string;
   message?: string;
 }
+
+export interface FilterUserResponse {
+  ok: boolean;
+  error?: string;
+  users?: User[];
+}
