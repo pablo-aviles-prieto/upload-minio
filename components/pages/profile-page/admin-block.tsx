@@ -28,13 +28,19 @@ export const AdminBlock = () => {
     [fetchPetition]
   );
 
+  // Retrieve the debounced function returned by the debounce hook
+  const debouncedFetch = useMemo(
+    () => debounce(fetchFilteredUsers, 300),
+    [debounce, fetchFilteredUsers]
+  );
+
   useEffect(() => {
-    const debouncedFetch = debounce(fetchFilteredUsers, 300);
-    debouncedFetch(query);
-  }, [query, debounce, fetchFilteredUsers]);
+    fetchFilteredUsers('');
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
+    debouncedFetch(event.target.value); // Debounced call directly in the input handler
   };
 
   return (
@@ -45,7 +51,7 @@ export const AdminBlock = () => {
         value={query}
         onChange={handleInputChange}
       />
-      {/* TODO: Render the filtered results */}
+      {/* TODO: Render the filtered results! */}
       <ul>
         {results.map((user) => (
           <li key={user.id}>{user.email}</li>

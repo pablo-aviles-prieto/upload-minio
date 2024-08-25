@@ -1,11 +1,11 @@
 import connectDb from '@/lib/mongoose-config';
-import UserModel, { User } from '@/models/user/user-model';
+import UserModel from '@/models/user/user-model';
 import { errorMessages } from '@/utils/const';
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export const GET = async (req: NextRequest) => {
-  const queryEmail = req.nextUrl.searchParams.get('query');
+  const queryEmail = req.nextUrl.searchParams.get('query') || '';
 
   try {
     await connectDb();
@@ -21,13 +21,18 @@ export const GET = async (req: NextRequest) => {
       );
     }
 
-    // TODO: Fetch the users that matches the queryEmail string,
-    // if not, return empty array
+    const users = await UserModel.find(
+      queryEmail
+        ? {
+            email: { $regex: queryEmail, $options: 'i' }, // Case-insensitive regex search
+          }
+        : {}
+    );
 
     return NextResponse.json(
       {
         ok: true,
-        users: [],
+        users,
       },
       { status: 200 }
     );
