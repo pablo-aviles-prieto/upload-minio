@@ -8,17 +8,19 @@ import { useDebounce } from '@/hooks/use-debounce';
 import type { FilterUserResponse } from '@/types';
 import { type User } from '@/models';
 import { UsersEditCard } from '@/components/cards/users-edit-card';
+import { EditUserModal } from '@/components/modal/edit-user-modal';
 
 export const AdminBlock = () => {
   const [query, setQuery] = useState('');
   const [users, setUsers] = useState<User[]>([]);
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
+  const [openEditUserModal, setOpenEditUserModal] = useState(false);
   const { fetchPetition } = useFetch();
   const debounce = useDebounce();
-  console.log('users', users);
 
   const fetchFilteredUsers = useCallback(
     async (input: string) => {
+      // TODO: Add loader whenever new users fetched
       const response = await fetchPetition<FilterUserResponse>({
         url: `${URL_FILTER_USERS}?query=${input}`,
         method: 'GET',
@@ -52,27 +54,35 @@ export const AdminBlock = () => {
   ) => {
     e.stopPropagation();
     setUserToEdit(user);
+    setOpenEditUserModal(true);
   };
 
   // TODO: Open a modal with the details to modify the concrete user and send the request to modify it
   // after send the request and modify the user details, reset the states (or maybe just closing
   // the accordion it reset all states)
   return (
-    <div>
-      <Input
-        className='max-w-md mx-auto my-2'
-        type='text'
-        placeholder='Search for a user...'
-        value={query}
-        onChange={handleInputChange}
+    <>
+      <EditUserModal
+        isOpen={openEditUserModal}
+        userData={userToEdit}
+        onClose={() => setOpenEditUserModal(false)}
       />
-      <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
-        {users.map((user) => (
-          <li key={user.id}>
-            <UsersEditCard user={user} onClick={editUserHandler} />
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div>
+        <Input
+          className='max-w-md mx-auto my-2'
+          type='text'
+          placeholder='Search for a user...'
+          value={query}
+          onChange={handleInputChange}
+        />
+        <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+          {users.map((user) => (
+            <li key={user.id}>
+              <UsersEditCard user={user} onClick={editUserHandler} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
