@@ -37,15 +37,9 @@ export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
         key: 'admin-section',
         title: 'Admin section',
         data: (
-          <div className='max-w-sm py-4 mx-auto'>
+          <div className='w-full py-4 mx-auto'>
             <p>Admin section</p>
             <AdminBlock />
-            {/* 
-              TODO: Add an input to search for users by email to change 
-              their role, scopes and status (maybe after searching for the user
-              it might open the accordion with the options to be changed).
-              The user must be searched by a concrete email, not a part of it!
-            */}
           </div>
         ),
       },

@@ -48,6 +48,7 @@ import {
   FileUp,
   ExternalLink,
   UserPlus,
+  UserPen,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -281,4 +282,5 @@ export const Icons = {
       />
     </svg>
   ),
+  userEdit: UserPen,
 };

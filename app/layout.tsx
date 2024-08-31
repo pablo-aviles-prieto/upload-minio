@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description: 'Upload data to minio s3 bucket',
 };
 
+// TODO: Try to fix the 500 error when loading a url directly
 export default async function RootLayout({
   children,
 }: Readonly<{
