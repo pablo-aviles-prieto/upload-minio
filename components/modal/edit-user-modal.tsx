@@ -71,7 +71,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
     >
       <ScrollArea maxHeight={450}>
         <p>{JSON.stringify(userData)}</p>
-        {/* TODO: Create the form to edit the user, send the request and close this */}
+        {/* TODO: Create the form to edit the user, send the request and close this! */}
       </ScrollArea>
     </Modal>
   );
