@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import type { AccordionData } from '@/types/accordion';
+import type { AccordionData } from '@/types';
 
 interface AccordionBlockProps {
   accordionData: AccordionData[];

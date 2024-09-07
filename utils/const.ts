@@ -29,6 +29,7 @@ export const URL_REGISTER_USER = `/api/auth/register`;
 export const URL_INVITE_USER = `/api/invite`;
 export const URL_PROCESS_FILE = `/api/minio/upload/process-file`;
 export const URL_LIST_FILES = `/api/minio/list-files`;
+export const URL_RETRIEVE_BUCKETS = `/api/minio/list-buckets`;
 export const URL_CHANGE_PREFERENCES = `/api/user/change-preferences`;
 export const URL_FILTER_USERS = `/api/user/filter`;
 

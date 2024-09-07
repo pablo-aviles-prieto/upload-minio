@@ -1,7 +1,7 @@
 'use client';
 
 import { AccordionBlock } from '@/components/accordion/accordion-block';
-import { AccordionData } from '@/types/accordion';
+import { AccordionData } from '@/types';
 import { useCallback, useMemo, useState } from 'react';
 import { ChangePasswordBlock } from './change-password-block';
 import { AdminBlock } from './admin-block';
@@ -38,7 +38,7 @@ export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
         title: 'Admin section',
         data: (
           <div className='w-full py-4 mx-auto'>
-            <p>Admin section</p>
+            <p>Search for a user to update their details</p>
             <AdminBlock />
           </div>
         ),

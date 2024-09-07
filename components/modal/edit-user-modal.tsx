@@ -6,11 +6,15 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFetch } from '@/hooks/use-fetch';
 import { useToast } from '@/components/ui/use-toast';
 import { User } from '@/models';
+import { BucketItemFromList } from 'minio';
+import { EditUserForm } from '../form/user/edit';
+import { EditUserFormValue } from '@/schema/edit-user-form-schema';
 
 interface EditUserModalProps {
   isOpen: boolean;
   onClose: () => void;
   userData: User | null;
+  bucketOptions: BucketItemFromList[];
 }
 
 interface EditUserResponse {
@@ -23,9 +27,10 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
   isOpen,
   userData,
   onClose,
+  bucketOptions,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [isSendingMail, setIsSendingMail] = useState(false);
+  const [isEditingUser, setIsEditingUser] = useState(false);
   const { fetchPetition } = useFetch();
   const { toast } = useToast();
 
@@ -58,6 +63,11 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
   //   setIsSendingMail(false);
   // };
 
+  // TODO: Finish the submit handler.
+  const onSubmit = async (data: EditUserFormValue) => {
+    console.log('data', data);
+  };
+
   if (!isMounted) {
     return null;
   }
@@ -70,8 +80,16 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
       onClose={onClose}
     >
       <ScrollArea maxHeight={450}>
-        <p>{JSON.stringify(userData)}</p>
-        {/* TODO: Create the form to edit the user, send the request and close this! */}
+        {userData && bucketOptions.length > 0 ? (
+          <EditUserForm
+            bucketOptions={bucketOptions}
+            isEditingUser={isEditingUser}
+            userData={userData}
+            onSubmit={onSubmit}
+          />
+        ) : (
+          <div>There was an error, try again later</div>
+        )}
       </ScrollArea>
     </Modal>
   );

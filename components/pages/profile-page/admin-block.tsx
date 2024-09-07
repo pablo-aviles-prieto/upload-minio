@@ -3,15 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { useFetch } from '@/hooks/use-fetch';
-import { URL_FILTER_USERS } from '@/utils/const';
+import { URL_FILTER_USERS, URL_RETRIEVE_BUCKETS } from '@/utils/const';
 import { useDebounce } from '@/hooks/use-debounce';
-import type { FilterUserResponse } from '@/types';
+import type { FilterUserResponse, ListBucketsResponse } from '@/types';
 import { type User } from '@/models';
 import { UsersEditCard } from '@/components/cards/users-edit-card';
 import { EditUserModal } from '@/components/modal/edit-user-modal';
+import { BucketItemFromList } from 'minio';
 
 export const AdminBlock = () => {
   const [query, setQuery] = useState('');
+  const [buckets, setBuckets] = useState<BucketItemFromList[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
   const [openEditUserModal, setOpenEditUserModal] = useState(false);
@@ -33,6 +35,17 @@ export const AdminBlock = () => {
     [fetchPetition]
   );
 
+  const fetchAllBuckets = useCallback(async () => {
+    const response = await fetchPetition<ListBucketsResponse>({
+      url: URL_RETRIEVE_BUCKETS,
+      method: 'GET',
+    });
+
+    if (response && response.buckets) {
+      setBuckets(response.buckets);
+    }
+  }, [fetchPetition]);
+
   // Retrieve the debounced function returned by the debounce hook
   const debouncedFetch = useMemo(
     () => debounce(fetchFilteredUsers, 300),
@@ -41,6 +54,7 @@ export const AdminBlock = () => {
 
   useEffect(() => {
     fetchFilteredUsers('');
+    fetchAllBuckets();
   }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +79,7 @@ export const AdminBlock = () => {
       <EditUserModal
         isOpen={openEditUserModal}
         userData={userToEdit}
+        bucketOptions={buckets}
         onClose={() => setOpenEditUserModal(false)}
       />
       <div>
