@@ -168,6 +168,8 @@ export const InviteForm = ({ bucketOptions }: UploadFormProps) => {
             bucketOptions={parsedBucketOptions}
             form={form}
             disabled={role === UserRole.ADMIN}
+            description='Select the buckets that the user will have access to (Admins have
+            access to all the buckets)'
           />
           <Button disabled={loading} className='w-full !mt-6' type='submit'>
             <Icons.userPlus className='mr-1 w-4 h-4' /> Invite

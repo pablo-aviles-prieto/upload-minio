@@ -1,16 +1,20 @@
 'use client';
 
 import { AccordionBlock } from '@/components/accordion/accordion-block';
-import { AccordionData } from '@/types';
+import { AccordionData, CustomSession, UserRole } from '@/types';
 import { useCallback, useMemo, useState } from 'react';
 import { ChangePasswordBlock } from './change-password-block';
 import { AdminBlock } from './admin-block';
 
 interface AccordionSectionProps {
-  userId: string;
+  user: CustomSession['user'] | undefined;
+  protectedUserMail: string;
 }
 
-export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
+export const ProfileAccordionSection = ({
+  user,
+  protectedUserMail,
+}: AccordionSectionProps) => {
   const [accordionValue, setAccordionValue] = useState<string>('');
 
   const resetAccordion = useCallback(
@@ -18,8 +22,11 @@ export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
     [setAccordionValue]
   );
 
-  const accordionData: AccordionData[] = useMemo(
-    () => [
+  const isAdmin = user?.role === UserRole.ADMIN;
+
+  const accordionData: AccordionData[] = useMemo(() => {
+    // Base accordion item for users
+    const baseItems: AccordionData[] = [
       {
         key: 'change-password',
         title: 'Change Password',
@@ -27,25 +34,35 @@ export const ProfileAccordionSection = ({ userId }: AccordionSectionProps) => {
           <div className='max-w-sm py-4 mx-auto'>
             <p>Change password</p>
             <ChangePasswordBlock
-              userId={userId}
+              userId={user?.id ?? ''}
               resetAccordion={resetAccordion}
             />
           </div>
         ),
       },
-      {
-        key: 'admin-section',
-        title: 'Admin section',
-        data: (
-          <div className='w-full py-4 mx-auto'>
-            <p>Search for a user to update their details</p>
-            <AdminBlock />
-          </div>
-        ),
-      },
-    ],
-    [resetAccordion, userId]
-  );
+    ];
+
+    // Admin-specific accordion item
+    const adminItems: AccordionData[] = isAdmin
+      ? [
+          {
+            key: 'admin-section',
+            title: 'Admin section',
+            data: (
+              <div className='w-full py-4 mx-auto'>
+                <p>Search for a user to update their details</p>
+                <AdminBlock
+                  loggedUser={user}
+                  protectedUserMail={protectedUserMail}
+                />
+              </div>
+            ),
+          },
+        ]
+      : [];
+
+    return [...baseItems, ...adminItems];
+  }, [resetAccordion, user, isAdmin]);
 
   return (
     <AccordionBlock

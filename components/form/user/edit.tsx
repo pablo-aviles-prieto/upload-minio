@@ -84,7 +84,7 @@ export const EditUserForm = ({
                 <Input
                   type='email'
                   placeholder='Enter your email...'
-                  disabled={isEditingUser}
+                  disabled
                   {...field}
                 />
               </FormControl>
@@ -106,6 +106,7 @@ export const EditUserForm = ({
                   }
                 }}
                 defaultValue={field.value}
+                disabled={isEditingUser}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -127,15 +128,19 @@ export const EditUserForm = ({
         <MultipleBucketComboboxField
           bucketOptions={parsedBucketOptions}
           form={form}
-          disabled={role === UserRole.ADMIN}
+          disabled={role === UserRole.ADMIN || isEditingUser}
         />
         <FormField
           control={form.control}
           name='status'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Role</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel>Status</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isEditingUser}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Select the status of the user' />
@@ -153,9 +158,15 @@ export const EditUserForm = ({
             </FormItem>
           )}
         />
-        <Button disabled={isEditingUser} className='w-full !mt-0' type='submit'>
-          {isEditingUser ? 'Editing' : 'Edit'} user
-        </Button>
+        <div>
+          <Button
+            disabled={isEditingUser}
+            className='w-full mt-2'
+            type='submit'
+          >
+            {isEditingUser ? 'Editing' : 'Edit'} user
+          </Button>
+        </div>
       </form>
     </Form>
   );

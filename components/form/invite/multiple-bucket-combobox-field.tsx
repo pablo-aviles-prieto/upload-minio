@@ -32,6 +32,7 @@ interface ComboboxFieldProps {
   bucketOptions: BucketItemFromList[] | undefined;
   form: UseFormReturn<any, any, undefined>;
   disabled?: boolean;
+  description?: string;
 }
 
 const WIDTH = 'w-full';
@@ -40,6 +41,7 @@ export const MultipleBucketComboboxField = ({
   bucketOptions,
   form,
   disabled = false,
+  description = undefined,
 }: ComboboxFieldProps) => {
   const [popoverWidth, setPopoverWidth] = useState<string>('auto');
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -71,7 +73,7 @@ export const MultipleBucketComboboxField = ({
       control={form.control}
       name='buckets'
       render={({ field }) => (
-        <FormItem className='flex flex-col'>
+        <FormItem>
           <FormLabel>Buckets</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
@@ -121,10 +123,7 @@ export const MultipleBucketComboboxField = ({
               </Command>
             </PopoverContent>
           </Popover>
-          <FormDescription>
-            Select the buckets that the user will have access to (Admins have
-            access to all the buckets)
-          </FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

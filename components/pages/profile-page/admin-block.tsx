@@ -5,13 +5,25 @@ import { Input } from '@/components/ui/input';
 import { useFetch } from '@/hooks/use-fetch';
 import { URL_FILTER_USERS, URL_RETRIEVE_BUCKETS } from '@/utils/const';
 import { useDebounce } from '@/hooks/use-debounce';
-import type { FilterUserResponse, ListBucketsResponse } from '@/types';
+import type {
+  CustomSession,
+  FilterUserResponse,
+  ListBucketsResponse,
+} from '@/types';
 import { type User } from '@/models';
 import { UsersEditCard } from '@/components/cards/users-edit-card';
 import { EditUserModal } from '@/components/modal/edit-user-modal';
 import { BucketItemFromList } from 'minio';
 
-export const AdminBlock = () => {
+interface AdminBlockProps {
+  loggedUser: CustomSession['user'] | undefined;
+  protectedUserMail: string;
+}
+
+export const AdminBlock = ({
+  loggedUser,
+  protectedUserMail,
+}: AdminBlockProps) => {
   const [query, setQuery] = useState('');
   const [buckets, setBuckets] = useState<BucketItemFromList[]>([]);
   const [users, setUsers] = useState<User[]>([]);
@@ -93,7 +105,14 @@ export const AdminBlock = () => {
         <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
           {users.map((user) => (
             <li key={user.id}>
-              <UsersEditCard user={user} onClick={editUserHandler} />
+              <UsersEditCard
+                isProtectedUser={
+                  user.email === protectedUserMail &&
+                  loggedUser?.email !== protectedUserMail
+                }
+                user={user}
+                onClick={editUserHandler}
+              />
             </li>
           ))}
         </ul>

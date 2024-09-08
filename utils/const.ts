@@ -20,6 +20,7 @@ export const errorMessages = {
   resetPassword:
     'There was an error while resetting the password. Try again later',
   filteringUsers: 'There was an error filtering the users. Try again later',
+  updatingUser: 'There was an error updating the user. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';
@@ -32,6 +33,7 @@ export const URL_LIST_FILES = `/api/minio/list-files`;
 export const URL_RETRIEVE_BUCKETS = `/api/minio/list-buckets`;
 export const URL_CHANGE_PREFERENCES = `/api/user/change-preferences`;
 export const URL_FILTER_USERS = `/api/user/filter`;
+export const URL_EDIT_USER = `/api/user/edit`;
 
 export const ACCESS_TO_ALL_SCOPES = 'All';
 

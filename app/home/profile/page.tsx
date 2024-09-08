@@ -7,6 +7,8 @@ import { capitalizeFirstLetter } from '@/utils/capitalize-first-letter';
 import { ACCESS_TO_ALL_SCOPES, getEllipsed } from '@/utils/const';
 import { getServerSession, NextAuthOptions } from 'next-auth';
 
+const { PROTECTED_USER_EMAIL } = process.env;
+
 export default async function Profile() {
   const session = (await getServerSession(
     authOptions as unknown as NextAuthOptions
@@ -66,7 +68,10 @@ export default async function Profile() {
             </li>
           </ul>
         </div>
-        <ProfileAccordionSection userId={session?.user?.id ?? ''} />
+        <ProfileAccordionSection
+          user={session.user}
+          protectedUserMail={PROTECTED_USER_EMAIL ?? ''}
+        />
       </ScrollArea>
     </div>
   );

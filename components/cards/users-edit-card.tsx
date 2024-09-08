@@ -17,11 +17,13 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 interface UsersEditCardProps extends Omit<CardProps, 'onClick'> {
   user: User;
+  isProtectedUser: boolean;
   onClick: (e: React.MouseEvent<HTMLButtonElement>, user: User) => void;
 }
 
 export const UsersEditCard = ({
   user,
+  isProtectedUser,
   onClick,
   ...props
 }: UsersEditCardProps) => {
@@ -29,13 +31,16 @@ export const UsersEditCard = ({
     <Card className={cn('w-full')} {...props}>
       <CardHeader>
         <CardTitle className={getEllipsed}>{user.email}</CardTitle>
-        <CardDescription>{user.role}</CardDescription>
+        <CardDescription>
+          {isProtectedUser ? `${user.role}, (NOT EDITABLE)` : user.role}
+        </CardDescription>
       </CardHeader>
       <CardFooter>
         <Button
           variant='secondary'
           className='w-full'
           onClick={(e) => onClick(e, user)}
+          disabled={isProtectedUser}
         >
           <Icons.userEdit className='mr-1 h-4 w-4' />
           Edit User

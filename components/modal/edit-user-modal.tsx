@@ -9,6 +9,7 @@ import { User } from '@/models';
 import { BucketItemFromList } from 'minio';
 import { EditUserForm } from '../form/user/edit';
 import { EditUserFormValue } from '@/schema/edit-user-form-schema';
+import { URL_EDIT_USER } from '@/utils/const';
 
 interface EditUserModalProps {
   isOpen: boolean;
@@ -38,34 +39,29 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
     if (userData) setIsMounted(true);
   }, [userData]);
 
-  // const onSubmit = async (data: ForgotPasswordFormValue) => {
-  //   setIsSendingMail(true);
-  //   const response = await fetchPetition<ForgotPasswordMailResponse>({
-  //     method: "POST",
-  //     url: URL_RECOVER_PASSWORD,
-  //     body: { email: data.email },
-  //   });
-
-  //   if (response.error) {
-  //     toast({
-  //       title: "Error sending the reset password email",
-  //       description: response.error,
-  //       variant: "destructive",
-  //     });
-  //   } else if (response.message) {
-  //     toast({
-  //       title: "Email sent",
-  //       description: response.message,
-  //       variant: "success",
-  //     });
-  //   }
-  //   onClose();
-  //   setIsSendingMail(false);
-  // };
-
-  // TODO: Finish the submit handler.
   const onSubmit = async (data: EditUserFormValue) => {
-    console.log('data', data);
+    setIsEditingUser(true);
+    const response = await fetchPetition<EditUserResponse>({
+      method: 'POST',
+      url: URL_EDIT_USER,
+      body: data,
+    });
+
+    if (response.error) {
+      toast({
+        title: 'Error updating the user',
+        description: response.error,
+        variant: 'destructive',
+      });
+    } else if (response.message) {
+      toast({
+        title: 'User updated',
+        description: response.message,
+        variant: 'success',
+      });
+      onClose();
+    }
+    setIsEditingUser(false);
   };
 
   if (!isMounted) {
@@ -88,7 +84,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
             onSubmit={onSubmit}
           />
         ) : (
-          <div>There was an error, try again later</div>
+          <div>There was an error, try again in few seconds</div>
         )}
       </ScrollArea>
     </Modal>
