@@ -12,6 +12,7 @@ import {
 import { Icons } from '../icons/icons';
 import { type User } from '@/models';
 import { getEllipsed } from '@/utils/const';
+import { capitalizeFirstLetter } from '@/utils/capitalize-first-letter';
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -32,7 +33,9 @@ export const UsersEditCard = ({
       <CardHeader>
         <CardTitle className={getEllipsed}>{user.email}</CardTitle>
         <CardDescription>
-          {isProtectedUser ? `${user.role}, (NOT EDITABLE)` : user.role}
+          {isProtectedUser
+            ? `${user.role}, (NOT EDITABLE)`
+            : `${user.role} (${capitalizeFirstLetter(user.status)})`}
         </CardDescription>
       </CardHeader>
       <CardFooter>

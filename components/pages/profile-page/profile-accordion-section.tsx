@@ -22,7 +22,7 @@ export const ProfileAccordionSection = ({
     [setAccordionValue]
   );
 
-  const isAdmin = user?.role === UserRole.ADMIN;
+  const isAdmin = useMemo(() => user?.role === UserRole.ADMIN, [user]);
 
   const accordionData: AccordionData[] = useMemo(() => {
     // Base accordion item for users
@@ -54,6 +54,7 @@ export const ProfileAccordionSection = ({
                 <AdminBlock
                   loggedUser={user}
                   protectedUserMail={protectedUserMail}
+                  resetAccordion={resetAccordion}
                 />
               </div>
             ),

@@ -16,6 +16,7 @@ interface EditUserModalProps {
   onClose: () => void;
   userData: User | null;
   bucketOptions: BucketItemFromList[];
+  resetAccordion: () => void;
 }
 
 interface EditUserResponse {
@@ -29,6 +30,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
   userData,
   onClose,
   bucketOptions,
+  resetAccordion,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [isEditingUser, setIsEditingUser] = useState(false);
@@ -60,6 +62,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
         variant: 'success',
       });
       onClose();
+      resetAccordion();
     }
     setIsEditingUser(false);
   };

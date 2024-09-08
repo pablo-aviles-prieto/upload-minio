@@ -18,11 +18,13 @@ import { BucketItemFromList } from 'minio';
 interface AdminBlockProps {
   loggedUser: CustomSession['user'] | undefined;
   protectedUserMail: string;
+  resetAccordion: () => void;
 }
 
 export const AdminBlock = ({
   loggedUser,
   protectedUserMail,
+  resetAccordion,
 }: AdminBlockProps) => {
   const [query, setQuery] = useState('');
   const [buckets, setBuckets] = useState<BucketItemFromList[]>([]);
@@ -83,9 +85,6 @@ export const AdminBlock = ({
     setOpenEditUserModal(true);
   };
 
-  // TODO: Open a modal with the details to modify the concrete user and send the request to modify it
-  // after send the request and modify the user details, reset the states (or maybe just closing
-  // the accordion it reset all states)
   return (
     <>
       <EditUserModal
@@ -93,6 +92,7 @@ export const AdminBlock = ({
         userData={userToEdit}
         bucketOptions={buckets}
         onClose={() => setOpenEditUserModal(false)}
+        resetAccordion={resetAccordion}
       />
       <div>
         <Input
