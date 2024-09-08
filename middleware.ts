@@ -25,7 +25,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirecting inactive users
-  if (session.status === UserStatus.INACTIVE) {
+  if (
+    session.status === UserStatus.INACTIVE ||
+    session.status === UserStatus.SUSPENDED
+  ) {
     url.pathname = '/inactive-user';
     return NextResponse.redirect(url);
   }
