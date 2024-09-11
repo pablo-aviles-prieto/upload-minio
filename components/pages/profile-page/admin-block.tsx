@@ -14,6 +14,7 @@ import { type User } from '@/models';
 import { UsersEditCard } from '@/components/cards/users-edit-card';
 import { EditUserModal } from '@/components/modal/edit-user-modal';
 import { BucketItemFromList } from 'minio';
+import { Icons } from '@/components/icons/icons';
 
 interface AdminBlockProps {
   loggedUser: CustomSession['user'] | undefined;
@@ -31,12 +32,13 @@ export const AdminBlock = ({
   const [users, setUsers] = useState<User[]>([]);
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
   const [openEditUserModal, setOpenEditUserModal] = useState(false);
+  const [isFetchingUsers, setIsFetchingUsers] = useState(false);
   const { fetchPetition } = useFetch();
   const debounce = useDebounce();
 
   const fetchFilteredUsers = useCallback(
     async (input: string) => {
-      // TODO: Add loader whenever new users fetched
+      setIsFetchingUsers(true);
       const response = await fetchPetition<FilterUserResponse>({
         url: `${URL_FILTER_USERS}?query=${input}`,
         method: 'GET',
@@ -45,6 +47,7 @@ export const AdminBlock = ({
       if (response && response.users) {
         setUsers(response.users);
       }
+      setIsFetchingUsers(false);
     },
     [fetchPetition]
   );
@@ -102,20 +105,24 @@ export const AdminBlock = ({
           value={query}
           onChange={handleInputChange}
         />
-        <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
-          {users.map((user) => (
-            <li key={user.id}>
-              <UsersEditCard
-                isProtectedUser={
-                  user.email === protectedUserMail &&
-                  loggedUser?.email !== protectedUserMail
-                }
-                user={user}
-                onClick={editUserHandler}
-              />
-            </li>
-          ))}
-        </ul>
+        {isFetchingUsers ? (
+          <Icons.loader className='w-16 h-16 mx-auto' />
+        ) : (
+          <ul className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+            {users.map((user) => (
+              <li key={user.id}>
+                <UsersEditCard
+                  isProtectedUser={
+                    user.email === protectedUserMail &&
+                    loggedUser?.email !== protectedUserMail
+                  }
+                  user={user}
+                  onClick={editUserHandler}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );

@@ -45,7 +45,6 @@ export const EditUserForm = ({
   userData,
   bucketOptions,
 }: Props) => {
-  // TODO: Ensure that the buckets have the correct scopes assigned
   const defaultValues = {
     email: userData.email,
     role: userData.role,

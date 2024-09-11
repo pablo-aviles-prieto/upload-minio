@@ -11,6 +11,8 @@ export const Header = async () => {
   );
 
   // TODO: Set as primary color the option with the current path
+  // TODO: Add logout button
+  // TODO: Add logo for uploader
   return (
     <nav
       className={`flex items-center justify-between px-8`}
