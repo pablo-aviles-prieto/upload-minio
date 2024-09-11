@@ -1,3 +1,4 @@
+import { Icons } from '@/components/icons/icons';
 import { UserRole } from '@/types';
 
 export const errorMessages = {
@@ -43,19 +44,28 @@ export enum ThemeOptions {
   DARK = 'dark',
 }
 
-// TODO: Add icons to the header opts
 export const HEADER_OPTIONS = [
-  { key: 'home', label: 'Home', icon: '', href: '/home' },
-  { key: 'upload', label: 'Upload', icon: '', href: '/home/upload' },
-  { key: 'files', label: 'Files', icon: '', href: '/home/files' },
+  { key: 'home', label: 'Home', icon: 'home', href: '/home' },
+  {
+    key: 'upload',
+    label: 'Upload',
+    icon: 'cloudUpload',
+    href: '/home/upload',
+  },
+  { key: 'files', label: 'Files', icon: 'folder', href: '/home/files' },
   {
     key: 'invite',
     label: 'Invite',
-    icon: '',
+    icon: 'userPlus',
     href: '/home/invite',
     roleAccess: [UserRole.ADMIN],
   },
-  { key: 'profile', label: 'Profile', icon: '', href: '/home/profile' },
+  {
+    key: 'profile',
+    label: 'Profile',
+    icon: 'profile',
+    href: '/home/profile',
+  },
 ];
 
 export const getEllipsed = 'overflow-hidden text-ellipsis whitespace-nowrap';

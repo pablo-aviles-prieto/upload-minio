@@ -49,6 +49,8 @@ import {
   ExternalLink,
   UserPlus,
   UserPen,
+  House,
+  Folder,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -341,4 +343,6 @@ export const Icons = {
       </circle>
     </svg>
   ),
+  home: House,
+  folder: Folder,
 };
