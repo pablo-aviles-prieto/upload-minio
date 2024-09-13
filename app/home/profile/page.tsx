@@ -46,11 +46,11 @@ export default async function Profile() {
   return (
     <div className='sm:max-w-[80%] mx-auto'>
       <Heading
-        customClasses='w-full my-6 px-2'
+        customClasses='w-full my-6 px-2 pr-4'
         title='Profile'
         description='Manage your account settings'
       />
-      <ScrollArea className='h-[calc(100vh-177px)] w-full px-2'>
+      <ScrollArea className='h-[calc(100vh-179px)] w-full px-2 pr-4'>
         <div className='w-full'>
           <h4 className='text-xl text-muted-foreground'>Account details</h4>
           <ul>

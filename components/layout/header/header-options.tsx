@@ -1,8 +1,8 @@
 'use client';
 
 import { Icons } from '@/components/icons/icons';
-import { UserRole, type CustomSession } from '@/types';
-import { HEADER_OPTIONS } from '@/utils/const';
+import { type CustomSession } from '@/types';
+import { filteredHeaderOptions } from '@/utils/filtered-header-options';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -12,16 +12,10 @@ interface HeaderOptionsProps {
 
 export const HeaderOptions = ({ session }: HeaderOptionsProps) => {
   const pathname = usePathname();
-  console.log('pathname', pathname);
 
   return (
     <>
-      {HEADER_OPTIONS.filter((opt) => {
-        return (
-          !opt.roleAccess ||
-          opt.roleAccess.includes(session?.user?.role ?? UserRole.USER)
-        );
-      }).map((opt) => {
+      {filteredHeaderOptions(session).map((opt) => {
         const Icon = Icons[(opt.icon || 'arrowRight') as keyof typeof Icons];
         const isPathActive = opt.href === pathname;
         return (
