@@ -5,13 +5,13 @@ import { getServerSession, NextAuthOptions } from 'next-auth';
 import Link from 'next/link';
 import ThemeToggle from '../theme/theme-toggle';
 import { HeaderOptions } from './header-options';
+import { LogoutButton } from '../logout-button/logout-button';
 
 export const Header = async () => {
   const session = await getServerSession(
     authOptions as unknown as NextAuthOptions
   );
 
-  // TODO: Add logout button
   // TODO: Add logo for uploader
   // TODO: Add a burger menu for mobile
   return (
@@ -25,7 +25,10 @@ export const Header = async () => {
       </Link>
       <div className='flex items-center gap-x-4'>
         <HeaderOptions session={session as CustomSession} />
-        <ThemeToggle />
+        <div className='flex items-center gap-x-2'>
+          <LogoutButton />
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   );
