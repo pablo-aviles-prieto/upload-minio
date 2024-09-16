@@ -5,9 +5,9 @@ import { Modal } from '@/components/ui/modal';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFetch } from '@/hooks/use-fetch';
 import { useToast } from '@/components/ui/use-toast';
-// import { ForgotPasswordForm } from "@/components/forms/recover-password-form/forgot-password-form";
-// import { ForgotPasswordFormValue } from "@/schemas/forgot-password-schema";
 import { URL_RECOVER_PASSWORD } from '@/utils/const';
+import { ForgotPasswordForm } from '../form/auth/forgot-password-form';
+import { ForgotPasswordFormValue } from '@/schema/forgot-password-schema';
 
 interface ForgotPasswordModalProps {
   isOpen: boolean;
@@ -29,38 +29,38 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   const { fetchPetition } = useFetch();
   const { toast } = useToast();
 
-  // useEffect(() => {
-  //   setIsMounted(true);
-  // }, []);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-  // const onSubmit = async (data: ForgotPasswordFormValue) => {
-  //   setIsSendingMail(true);
-  //   const response = await fetchPetition<ForgotPasswordMailResponse>({
-  //     method: "POST",
-  //     url: URL_RECOVER_PASSWORD,
-  //     body: { email: data.email },
-  //   });
+  const onSubmit = async (data: ForgotPasswordFormValue) => {
+    setIsSendingMail(true);
+    const response = await fetchPetition<ForgotPasswordMailResponse>({
+      method: 'POST',
+      url: URL_RECOVER_PASSWORD,
+      body: { email: data.email },
+    });
 
-  //   if (response.error) {
-  //     toast({
-  //       title: "Error sending the reset password email",
-  //       description: response.error,
-  //       variant: "destructive",
-  //     });
-  //   } else if (response.message) {
-  //     toast({
-  //       title: "Email sent",
-  //       description: response.message,
-  //       variant: "success",
-  //     });
-  //   }
-  //   onClose();
-  //   setIsSendingMail(false);
-  // };
+    if (response.error) {
+      toast({
+        title: 'Error sending the reset password email',
+        description: response.error,
+        variant: 'destructive',
+      });
+    } else if (response.message) {
+      toast({
+        title: 'Email sent',
+        description: response.message,
+        variant: 'success',
+      });
+    }
+    onClose();
+    setIsSendingMail(false);
+  };
 
-  // if (!isMounted) {
-  //   return null;
-  // }
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Modal
@@ -69,10 +69,8 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
     >
-      {/* TODO: Finish the WIP */}
       <ScrollArea maxHeight={450}>
-        <div>Work in progress ma man</div>
-        {/* <ForgotPasswordForm isSendingMail={isSendingMail} onSubmit={onSubmit} /> */}
+        <ForgotPasswordForm isSendingMail={isSendingMail} onSubmit={onSubmit} />
       </ScrollArea>
     </Modal>
   );

@@ -22,7 +22,6 @@ export const handleRegisterUserMail = ({
     NODE_ENV === 'production' ? APP_BASE_URL_PROD : APP_BASE_URL_DEV
   }/auth/register?token=${token}`;
 
-  // TODO: Confirm if the name will be uploader
   const emailData = {
     to: receiverMail,
     from: SENDER_MAIL_ACC ?? '',

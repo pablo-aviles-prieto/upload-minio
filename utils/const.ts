@@ -22,6 +22,9 @@ export const errorMessages = {
     'There was an error while resetting the password. Try again later',
   filteringUsers: 'There was an error filtering the users. Try again later',
   updatingUser: 'There was an error updating the user. Try again later',
+  resetTokenExpired: 'The reset password link has expired',
+  recoveryPassword:
+    'There was an error sending the recovery password email. Try again later',
 } as const;
 
 export const DEFAULT_CALLBACK_URL = '/home';

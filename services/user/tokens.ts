@@ -15,6 +15,13 @@ export interface DecodedRegisterJWT extends RegisterTokenPayload {
   jti: string;
 }
 
+export type DecodedResetJWT = {
+  userId: string;
+  iat: number;
+  exp: number;
+  jti: string;
+};
+
 export const generateRegisterToken = async (payload: RegisterTokenPayload) => {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
@@ -53,6 +60,39 @@ export const verifyRegisterToken = async (token: string) => {
     ) {
       throw new CustomError(errorMessages.registerTokenExpired, 401);
     }
+    throw error;
+  }
+};
+
+export const generateRecoveryToken = async (userId: string) => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT secret key is not defined');
+  }
+
+  return encode({
+    token: { userId },
+    secret,
+    maxAge: 3600,
+  });
+};
+
+export const verifyRecoveryToken = async (token: string) => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT secret key is not defined');
+  }
+
+  try {
+    const decodedToken = (await decode({ token, secret })) as DecodedResetJWT;
+
+    // Check if the token has expired
+    if (decodedToken && Date.now() >= decodedToken.exp * 1000) {
+      throw new CustomError(errorMessages.resetTokenExpired, 401);
+    }
+
+    return decodedToken;
+  } catch (error) {
     throw error;
   }
 };

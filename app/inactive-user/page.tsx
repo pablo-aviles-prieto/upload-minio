@@ -9,7 +9,10 @@ export default async function Home() {
     authOptions as unknown as NextAuthOptions
   );
 
-  if (session?.user && (session.user as any).status === UserStatus.ACTIVE) {
+  if (
+    (session?.user && (session.user as any).status === UserStatus.ACTIVE) ||
+    !session
+  ) {
     redirect('/home');
   }
 

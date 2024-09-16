@@ -53,7 +53,6 @@ export const InputFileBlock = ({
   };
 
   const handleFileRemoved = (uniqueFileId: string) => {
-    console.log('uniqueFileId', uniqueFileId);
     fetch(`${URL_PROCESS_FILE}?file=${uniqueFileId}`, { method: 'DELETE' })
       .then((response) => {
         if (!response.ok) {
