@@ -6,6 +6,7 @@ import Link from 'next/link';
 import ThemeToggle from '../theme/theme-toggle';
 import { HeaderOptions } from './header-options';
 import { LogoutButton } from '../logout-button/logout-button';
+import { MobileSidebar } from './mobile-sidebar';
 
 export const Header = async () => {
   const session = await getServerSession(
@@ -13,7 +14,6 @@ export const Header = async () => {
   );
 
   // TODO: Add logo for uploader
-  // TODO: Add a burger menu for mobile
   return (
     <nav
       className={`flex items-center justify-between px-8`}
@@ -23,8 +23,13 @@ export const Header = async () => {
       <Link className='hover:text-primary' href='/home'>
         Uploader
       </Link>
-      <div className='flex items-center gap-x-4'>
-        <HeaderOptions session={session as CustomSession} />
+      <div className='flex items-center gap-x-2 md:gap-x-4'>
+        <div className='hidden md:flex items-center gap-x-4'>
+          <HeaderOptions session={session as CustomSession} />
+        </div>
+        <div className='md:hidden'>
+          <MobileSidebar session={session as CustomSession} />{' '}
+        </div>
         <div className='flex items-center gap-x-2'>
           <LogoutButton />
           <ThemeToggle />

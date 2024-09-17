@@ -20,7 +20,6 @@ interface FilesListProps {
 export const FilesList = ({ bucketName }: FilesListProps) => {
   const [files, setFiles] = useState<BucketItem[]>([]);
 
-  // TODO: Try to fetch with react query ??
   useEffect(() => {
     // Clear the files state when the bucket changes
     setFiles([]);

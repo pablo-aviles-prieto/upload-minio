@@ -22,9 +22,9 @@ export const HeaderOptions = ({ session }: HeaderOptionsProps) => {
           <Link
             className={`${
               isPathActive
-                ? 'text-primary/85 border-b border-orange-600/85'
-                : 'hover:text-primary hover:border-b border-orange-600'
-            } flex items-center gap-x-2`}
+                ? 'text-primary/85 border-orange-600/85'
+                : 'border-transparent hover:text-primary hover:border-orange-600'
+            } flex items-center gap-x-2 border-b`}
             key={opt.key}
             href={opt.href}
           >
