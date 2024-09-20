@@ -82,7 +82,6 @@ export const authOptions = {
         token.theme = user.theme;
         token.status = user.status;
       }
-      // TODO: Remove console logs
       // console.log('date now', Date.now());
       // console.log('date', new Date());
       // console.log('date IAT', new Date((token as unknown as any)?.exp * 1000));

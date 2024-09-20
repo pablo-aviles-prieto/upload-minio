@@ -24,6 +24,7 @@ import { UserRole, type CustomSession, type UploadedFiles } from '@/types';
 import { Icons } from '@/components/icons/icons';
 import { UploadedFilesCard } from '@/components/cards/uploaded-files-card';
 import { parseBucketOptions } from '@/utils/parse-bucket-options';
+import { useRouter } from 'next/navigation';
 
 const defaultValues = {
   bucket: '',
@@ -43,6 +44,7 @@ export const UploadForm = ({ bucketOptions, userData }: UploadFormProps) => {
   );
   const inputFileRef = useRef<FilePond>(null);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<UploadFormValue>({
     resolver: zodResolver(UploadFormSchema),
@@ -67,7 +69,6 @@ export const UploadForm = ({ bucketOptions, userData }: UploadFormProps) => {
       e.stopPropagation();
       setFiles([]);
       setUploadedFiles([]);
-      // TODO: Instead of resetting, navigate to the file page passing the bucket to see the files?
       form.reset(defaultValues, {
         keepTouched: false,
         keepDirty: false,
@@ -112,6 +113,7 @@ export const UploadForm = ({ bucketOptions, userData }: UploadFormProps) => {
         variant: 'success',
       });
       setLoading(false);
+      router.push(`/home/files?bucket=${data.bucket}`);
     },
     [inputFileRef, setLoading, toast, formFiles]
   );

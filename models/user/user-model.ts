@@ -4,8 +4,6 @@ import { UserRole, UserStatus } from '@/types/user';
 import { v4 as uuidv4 } from 'uuid';
 import { ThemeOptions } from '@/utils/const';
 
-// TODO: lastLoginDate gets updated only when the user logins. But with next auth
-// the token gets updated automatically, so the user doesnt login again
 export interface User extends Document {
   _id: string;
   email: string;

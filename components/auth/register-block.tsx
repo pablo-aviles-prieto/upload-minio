@@ -28,7 +28,6 @@ export const RegisterUserBlock = ({ decodedToken }: RegisterUserBlockProps) => {
 
   if (decodedToken.errorMessage || !decodedToken.data) return null;
 
-  // TODO: Check the Uploader name
   return (
     <ScrollArea className='h-[100vh] w-full'>
       <div className='flex flex-col items-center justify-center h-screen max-w-sm mx-auto px-2'>
