@@ -20,7 +20,6 @@ interface UploadedFilesCardProps extends CardProps {
   fileSize: number;
 }
 
-// TODO: Check that it looks nice when uploaded files (since its modified on the /home/files page)
 export function UploadedFilesCard({
   fileName,
   fileUrl,
