@@ -12,8 +12,10 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Upload data',
+  title: 'Uploader',
   description: 'Upload data to minio s3 bucket',
+  icons: [{ rel: 'icon', url: '/assets/favicon.ico' }],
+  authors: [{ name: 'Pablo Avilés Prieto', url: 'https://www.pabloaviles.es' }],
 };
 
 export default async function RootLayout({

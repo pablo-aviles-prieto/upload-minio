@@ -7,21 +7,32 @@ import ThemeToggle from '../theme/theme-toggle';
 import { HeaderOptions } from './header-options';
 import { LogoutButton } from '../logout-button/logout-button';
 import { MobileSidebar } from './mobile-sidebar';
+import Image from 'next/image';
 
 export const Header = async () => {
   const session = await getServerSession(
     authOptions as unknown as NextAuthOptions
   );
 
-  // TODO: Add logo for uploader
   return (
     <nav
       className={`flex items-center justify-between px-8`}
       style={{ height: HEADER_HEIGHT }}
       aria-label='Main Navigation'
     >
-      <Link className='hover:text-primary' href='/home'>
-        Uploader
+      <Link
+        className='min-w-[4.5rem] hover:text-primary sm:mt-6 flex flex-col items-center justify-center'
+        href='/home'
+      >
+        <Image
+          className='rounded-lg'
+          src='/assets/logo.webp'
+          alt='Uploader logo'
+          width={50}
+          height={50}
+          priority
+        />
+        <span className='hidden sm:inline'>Uploader</span>
       </Link>
       <div className='flex items-center gap-x-2 md:gap-x-4'>
         <div className='hidden md:flex items-center gap-x-4'>
